@@ -3,18 +3,25 @@
     <h1>Student Add</h1>
     <h4>{{ student.firstName }} {{ student.lastName }}</h4>
     <br />
-    ID:
+    <label for="id">ID</label>
     <input v-model="student.idNumber" type="text" id="id" />
     <span id="idNumberErr" class="error">{{ errors.idNumber || "*" }}</span>
-    <br />
-    <br />First Name:
-    <input v-model="student.firstName" type="text" id="firstName" />
+
+    <label for="fname">First Name</label>
+    <input v-model="student.firstName" type="text" id="fname" />
     <span id="firstNameErr" class="error">{{ errors.firstName || "*" }}</span>
-    <br />
-    <br />Last Name:
-    <input v-model="student.lastName" type="text" id="lastName" />
+
+    <label for="lname">Last Name</label>
+    <input v-model="student.lastName" type="text" id="lname" />
     <span id="lastNameErr" class="error">{{ errors.lastName || "*" }}</span>
-    <br />
+
+    <!-- <label for="country">Country</label>
+    <select id="country" name="country">
+      <option value="australia">Australia</option>
+      <option value="canada">Canada</option>
+      <option value="usa">USA</option>
+    </select> -->
+
     <br />Zip:
     <input
       v-model="student.zip"
@@ -76,7 +83,9 @@
     <span id="genderErr" class="error">{{ errors.gender || "*" }}</span>
     <br />
     <br />
-    <button name="Save" v-on:click.prevent="addStudent()">ADD</button>
+    <button class="success" name="Save" v-on:click.prevent="addStudent()">
+      ADD
+    </button>
     <button name="Cancel" v-on:click.prevent="cancel()">CANCEL</button>
   </div>
 </template>

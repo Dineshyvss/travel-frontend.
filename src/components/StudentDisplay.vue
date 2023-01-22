@@ -11,17 +11,9 @@
   </div>
   <div class="grid-item">
     <button @click="this.show = true" role="link">Delete</button>
-    <!-- <router-link
-      :to="{ name: 'deleteStudent', params: { id: student.id } }"
-      custom
-      v-slot="{ navigate }"
-    >
-      <button @click="navigate" role="link">Delete</button>
-    </router-link> -->
   </div>
 
   <div v-if="show" class="modal">
-    <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-header">
         <span @click="this.show = false" class="close">&times;</span>
