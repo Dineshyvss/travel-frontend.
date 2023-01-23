@@ -3,84 +3,79 @@
     <h1>Student Add</h1>
     <h4>{{ student.firstName }} {{ student.lastName }}</h4>
     <br />
-    <label for="id">ID</label>
-    <input v-model="student.idNumber" type="text" id="id" />
-    <span id="idNumberErr" class="error">{{ errors.idNumber || "*" }}</span>
+    <div class="form">
+      <label for="id">ID</label>
+      <br />
+      <input v-model="student.idNumber" type="text" id="id" />
+      <span id="idNumberErr" class="error">{{ errors.idNumber || "*" }}</span>
+      <br />
 
-    <label for="fname">First Name</label>
-    <input v-model="student.firstName" type="text" id="fname" />
-    <span id="firstNameErr" class="error">{{ errors.firstName || "*" }}</span>
+      <div class="form-group">
+        <label for="fname">First Name</label>
+        <input v-model="student.firstName" type="text" id="fname" />
+      </div>
+      <label for="fname">First Name</label>
+      <br />
+      <input v-model="student.firstName" type="text" id="fname" />
+      <span id="firstNameErr" class="error">{{ errors.firstName || "*" }}</span>
+      <br />
 
-    <label for="lname">Last Name</label>
-    <input v-model="student.lastName" type="text" id="lname" />
-    <span id="lastNameErr" class="error">{{ errors.lastName || "*" }}</span>
+      <label for="lname">Last Name</label>
+      <br />
+      <input v-model="student.lastName" type="text" id="lname" />
+      <span id="lastNameErr" class="error">{{ errors.lastName || "*" }}</span>
+      <br />
 
-    <!-- <label for="country">Country</label>
-    <select id="country" name="country">
-      <option value="australia">Australia</option>
-      <option value="canada">Canada</option>
-      <option value="usa">USA</option>
-    </select> -->
+      <label for="zip">ZIP</label>
+      <br />
+      <input
+        v-model="student.zip"
+        type="text"
+        id="zip"
+        v-on:blur="cityStateLookup()"
+      />
+      <span id="zipErr" class="error">{{ errors.zip || "*" }}</span>
+      <br />
 
-    <br />Zip:
-    <input
-      v-model="student.zip"
-      type="text"
-      id="zip"
-      v-on:blur="cityStateLookup()"
-    />
-    <span id="zipErr" class="error">{{ errors.zip || "*" }}</span>
-    <br />
-    <br />City:
-    <input v-model="student.city" type="text" id="city" />
-    <span id="cityErr" class="error">{{ errors.city || "*" }}</span>
-    <br />
-    <br />State:
-    <input v-model="student.state" type="text" id="state" />
-    <span id="stateErr" class="error">{{ errors.state || "*" }}</span>
-    <br />
-    <br />Email:
-    <input v-model="student.email" type="text" id="email" />
-    <span id="emailErr" class="error">{{ errors.email || "*" }}</span>
-    <br />
-    <br />Classification:
-    <input
-      v-model="student.classification"
-      type="radio"
-      name="classification"
-      value="FR"
-    />Freshman
-    <input
-      v-model="student.classification"
-      type="radio"
-      name="classification"
-      value="SO"
-    />Sophmore
-    <input
-      v-model="student.classification"
-      type="radio"
-      name="classification"
-      value="JR"
-    />Junior
-    <input
-      v-model="student.classification"
-      type="radio"
-      name="classification"
-      value="SR"
-    />Senior
-    <span id="classificationErr" class="error">{{
-      errors.classification || "*"
-    }}</span>
-    <br />
-    <br />Gender:
-    <input
-      v-model="student.gender"
-      type="radio"
-      name="gender"
-      value="F"
-    />Female
-    <input v-model="student.gender" type="radio" name="gender" value="M" />Male
-    <span id="genderErr" class="error">{{ errors.gender || "*" }}</span>
+      <label for="city">City</label>
+      <br />
+      <input v-model="student.city" type="text" id="city" />
+      <span id="cityErr" class="error">{{ errors.city || "*" }}</span>
+      <br />
+
+      <label for="state">State</label>
+      <br />
+      <input v-model="student.state" type="text" id="state" />
+      <span id="stateErr" class="error">{{ errors.state || "*" }}</span>
+      <br />
+
+      <label for="email">Email</label>
+      <br />
+      <input v-model="student.email" type="text" id="email" />
+      <span id="emailErr" class="error">{{ errors.email || "*" }}</span>
+      <br />
+
+      <label for="classification">Classification</label>
+      <br />
+      <select v-model="student.classification" id="classification">
+        <option value="FR">Freshman</option>
+        <option value="SO">Sophomore</option>
+        <option value="JR">Junior</option>
+        <option value="SR">Senior</option>
+      </select>
+      <span id="classificationErr" class="error">{{
+        errors.classification || "*"
+      }}</span>
+      <br />
+
+      <label for="gender">Gender</label>
+      <br />
+      <select v-model="student.gender" id="gender">
+        <option value="F">Female</option>
+        <option value="M">Male</option>
+      </select>
+      <span id="genderErr" class="error">{{ errors.gender || "*" }}</span>
+    </div>
     <br />
     <br />
     <button class="success" name="Save" v-on:click.prevent="addStudent()">
