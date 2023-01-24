@@ -3,81 +3,111 @@
     <h1>Student Edit</h1>
     <h4>{{ student.firstName }} {{ student.lastName }}</h4>
     <br />
-    Id:
-    <input v-model="student.idNumber" type="text" id="id" />
-    <span id="idNumberErr" class="error">{{ errors.idNumber || "*" }}</span>
+    <div class="form">
+      <div class="form-group">
+        <label for="idNumber">
+          OC ID Number
+          <span id="idNumberErr" class="text-error">{{
+            errors.idNumber || "*"
+          }}</span>
+        </label>
+        <input v-model="student.idNumber" type="text" id="idNumber" />
+      </div>
+
+      <div class="form-group">
+        <label for="fname">
+          First Name
+          <span id="firstNameErr" class="text-error">{{
+            errors.firstName || "*"
+          }}</span>
+        </label>
+        <input v-model="student.firstName" type="text" id="fname" />
+      </div>
+
+      <div class="form-group">
+        <label for="lname">
+          Last Name
+          <span id="lastNameErr" class="text-error">{{
+            errors.lastName || "*"
+          }}</span>
+        </label>
+        <input v-model="student.lastName" type="text" id="lname" />
+      </div>
+
+      <div class="form-group">
+        <label for="zip">
+          ZIP
+          <span id="zipErr" class="text-error">{{ errors.zip || "*" }}</span>
+        </label>
+        <input
+          v-model="student.zip"
+          type="text"
+          id="zip"
+          v-on:blur="cityStateLookup()"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="city">
+          City
+          <span id="cityErr" class="text-error">{{ errors.city || "*" }}</span>
+        </label>
+        <input v-model="student.city" type="text" id="city" />
+      </div>
+
+      <div class="form-group">
+        <label for="state">
+          State
+          <span id="stateErr" class="text-error">{{
+            errors.state || "*"
+          }}</span>
+        </label>
+        <input v-model="student.state" type="text" id="state" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">
+          Email
+          <span id="emailErr" class="text-error">{{
+            errors.email || "*"
+          }}</span>
+        </label>
+        <input v-model="student.email" type="text" id="email" />
+      </div>
+
+      <div class="form-group">
+        <label for="classification">
+          Classification
+          <span id="classificationErr" class="text-error">{{
+            errors.classification || "*"
+          }}</span>
+        </label>
+        <select v-model="student.classification" id="classification">
+          <option value="FR">Freshman</option>
+          <option value="SO">Sophomore</option>
+          <option value="JR">Junior</option>
+          <option value="SR">Senior</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="gender">
+          Gender
+          <span id="genderErr" class="text-error">{{
+            errors.gender || "*"
+          }}</span>
+        </label>
+        <select v-model="student.gender" id="gender">
+          <option value="F">Female</option>
+          <option value="M">Male</option>
+        </select>
+      </div>
+    </div>
     <br />
-    <br />Fist Name:
-    <input v-model="student.firstName" type="text" id="firstName" />
-    <span id="firstNameErr" class="error">{{ errors.firstName || "*" }}</span>
-    <br />
-    <br />Last Name:
-    <input v-model="student.lastName" type="text" id="lastName" />
-    <span id="lastNameErr" class="error">{{ errors.lastName || "*" }}</span>
-    <br />
-    <br />Zip:
-    <input
-      v-model="student.zip"
-      type="text"
-      id="zip"
-      v-on:blur="cityStateLookup()"
-    />
-    <span id="zipErr" class="error">{{ errors.zip || "*" }}</span>
-    <br />
-    <br />City:
-    <input v-model="student.city" type="text" id="city" />
-    <span id="cityErr" class="error">{{ errors.city || "*" }}</span>
-    <br />
-    <br />State:
-    <input v-model="student.state" type="text" id="state" />
-    <span id="stateErr" class="error">{{ errors.state || "*" }}</span>
-    <br />
-    <br />E-mail:
-    <input v-model="student.email" type="text" id="email" />
-    <span id="emailErr" class="error">{{ errors.email || "*" }}</span>
-    <br />
-    <br />Classification:
-    <input
-      v-model="student.classification"
-      type="radio"
-      name="classification"
-      value="FR"
-    />Freshman
-    <input
-      v-model="student.classification"
-      type="radio"
-      name="classification"
-      value="SO"
-    />Sophmore
-    <input
-      v-model="student.classification"
-      type="radio"
-      name="classification"
-      value="JR"
-    />Junior
-    <input
-      v-model="student.classification"
-      type="radio"
-      name="classification"
-      value="SR"
-    />Senior
-    <span id="classificationErr" class="error">{{
-      errors.classification || "*"
-    }}</span>
-    <br />
-    <br />Gender:
-    <input
-      v-model="student.gender"
-      type="radio"
-      name="gender"
-      value="F"
-    />Female
-    <input v-model="student.gender" type="radio" name="gender" value="M" />Male
-    <span id="genderErr" class="error">{{ errors.gender || "*" }}</span>
-    <br />
-    <br />
-    <button name="Save" v-on:click.prevent="updateStudent()">UPDATE</button>
-    <button name="cancel" v-on:click.prevent="cancel()">CANCEL</button>
+    <button class="success" name="Save" v-on:click.prevent="updateStudent()">
+      Update
+    </button>
+    <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>
   </div>
 </template>
 
@@ -114,8 +144,14 @@ export default {
           if (error.response.status == "406") {
             this.errors = {};
             for (let obj of error.response.data) {
-              this.$set(this.errors, obj.attributeName, obj.message);
+              this.errors[obj.attributeName] = obj.message;
             }
+          } else {
+            if (error.response.data.attributeName === undefined) {
+              error.response.data.attributeName = "idNumber";
+            }
+            this.errors[error.response.data.attributeName] =
+              error.response.data.error.sqlMessage;
           }
         });
     },

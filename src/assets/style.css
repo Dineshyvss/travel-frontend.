@@ -114,7 +114,7 @@ button {
 .grid-container {
   display: grid;
   gap: 20px 20px;
-  grid-template-columns: 150px 120px 150px;
+  grid-template-columns: 100px 150px 120px 150px;
   padding: 10px;
   align-content: center;
   justify-content: center;
@@ -152,10 +152,10 @@ button {
   padding: 0;
   background-color: #fff;
   color: rgba(0, 0, 0, 0.87);
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 20% auto; /* 15% from the top and centered */
   padding: 20px;
   border-radius: 4px;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 50%; /* Could be more or less, depending on screen size */
   align-items: center;
   font-size: 1.25rem;
   font-weight: 500;
@@ -178,6 +178,10 @@ button {
   cursor: pointer;
 }
 
+.text-error {
+  color: #ee5044;
+}
+
 .error {
   color: white;
   background-color: #ee5044;
@@ -190,9 +194,8 @@ button {
 
 .form {
   width: 100%;
-  max-width: 35rem;
-  justify-content: center;
-  align-items: center;
+  max-width: 30rem;
+  margin: auto;
 }
 
 .form-group {

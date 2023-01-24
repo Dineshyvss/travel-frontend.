@@ -4,84 +4,110 @@
     <h4>{{ student.firstName }} {{ student.lastName }}</h4>
     <br />
     <div class="form">
-      <label for="id">ID</label>
-      <br />
-      <input v-model="student.idNumber" type="text" id="id" />
-      <span id="idNumberErr" class="error">{{ errors.idNumber || "*" }}</span>
-      <br />
+      <div class="form-group">
+        <label for="idNumber">
+          OC ID Number
+          <span id="idNumberErr" class="text-error">{{
+            errors.idNumber || "*"
+          }}</span>
+        </label>
+        <input v-model="student.idNumber" type="text" id="idNumber" />
+      </div>
 
       <div class="form-group">
-        <label for="fname">First Name</label>
+        <label for="fname">
+          First Name
+          <span id="firstNameErr" class="text-error">{{
+            errors.firstName || "*"
+          }}</span>
+        </label>
         <input v-model="student.firstName" type="text" id="fname" />
       </div>
-      <label for="fname">First Name</label>
-      <br />
-      <input v-model="student.firstName" type="text" id="fname" />
-      <span id="firstNameErr" class="error">{{ errors.firstName || "*" }}</span>
-      <br />
 
-      <label for="lname">Last Name</label>
-      <br />
-      <input v-model="student.lastName" type="text" id="lname" />
-      <span id="lastNameErr" class="error">{{ errors.lastName || "*" }}</span>
-      <br />
+      <div class="form-group">
+        <label for="lname">
+          Last Name
+          <span id="lastNameErr" class="text-error">{{
+            errors.lastName || "*"
+          }}</span>
+        </label>
+        <input v-model="student.lastName" type="text" id="lname" />
+      </div>
 
-      <label for="zip">ZIP</label>
-      <br />
-      <input
-        v-model="student.zip"
-        type="text"
-        id="zip"
-        v-on:blur="cityStateLookup()"
-      />
-      <span id="zipErr" class="error">{{ errors.zip || "*" }}</span>
-      <br />
+      <div class="form-group">
+        <label for="zip">
+          ZIP
+          <span id="zipErr" class="text-error">{{ errors.zip || "*" }}</span>
+        </label>
+        <input
+          v-model="student.zip"
+          type="text"
+          id="zip"
+          v-on:blur="cityStateLookup()"
+        />
+      </div>
 
-      <label for="city">City</label>
-      <br />
-      <input v-model="student.city" type="text" id="city" />
-      <span id="cityErr" class="error">{{ errors.city || "*" }}</span>
-      <br />
+      <div class="form-group">
+        <label for="city">
+          City
+          <span id="cityErr" class="text-error">{{ errors.city || "*" }}</span>
+        </label>
+        <input v-model="student.city" type="text" id="city" />
+      </div>
 
-      <label for="state">State</label>
-      <br />
-      <input v-model="student.state" type="text" id="state" />
-      <span id="stateErr" class="error">{{ errors.state || "*" }}</span>
-      <br />
+      <div class="form-group">
+        <label for="state">
+          State
+          <span id="stateErr" class="text-error">{{
+            errors.state || "*"
+          }}</span>
+        </label>
+        <input v-model="student.state" type="text" id="state" />
+      </div>
 
-      <label for="email">Email</label>
-      <br />
-      <input v-model="student.email" type="text" id="email" />
-      <span id="emailErr" class="error">{{ errors.email || "*" }}</span>
-      <br />
+      <div class="form-group">
+        <label for="email">
+          Email
+          <span id="emailErr" class="text-error">{{
+            errors.email || "*"
+          }}</span>
+        </label>
+        <input v-model="student.email" type="text" id="email" />
+      </div>
 
-      <label for="classification">Classification</label>
-      <br />
-      <select v-model="student.classification" id="classification">
-        <option value="FR">Freshman</option>
-        <option value="SO">Sophomore</option>
-        <option value="JR">Junior</option>
-        <option value="SR">Senior</option>
-      </select>
-      <span id="classificationErr" class="error">{{
-        errors.classification || "*"
-      }}</span>
-      <br />
+      <div class="form-group">
+        <label for="classification">
+          Classification
+          <span id="classificationErr" class="text-error">{{
+            errors.classification || "*"
+          }}</span>
+        </label>
+        <select v-model="student.classification" id="classification">
+          <option value="FR">Freshman</option>
+          <option value="SO">Sophomore</option>
+          <option value="JR">Junior</option>
+          <option value="SR">Senior</option>
+        </select>
+      </div>
 
-      <label for="gender">Gender</label>
-      <br />
-      <select v-model="student.gender" id="gender">
-        <option value="F">Female</option>
-        <option value="M">Male</option>
-      </select>
-      <span id="genderErr" class="error">{{ errors.gender || "*" }}</span>
+      <div class="form-group">
+        <label for="gender">
+          Gender
+          <span id="genderErr" class="text-error">{{
+            errors.gender || "*"
+          }}</span>
+        </label>
+        <select v-model="student.gender" id="gender">
+          <option value="F">Female</option>
+          <option value="M">Male</option>
+        </select>
+      </div>
     </div>
     <br />
-    <br />
     <button class="success" name="Save" v-on:click.prevent="addStudent()">
-      ADD
+      Add
     </button>
-    <button name="Cancel" v-on:click.prevent="cancel()">CANCEL</button>
+    <button name="Cancel" v-on:click.prevent="cancel()">Cancel</button>
   </div>
 </template>
 
@@ -103,10 +129,18 @@ export default {
         })
         .catch((error) => {
           if (error.response.status == "406") {
-            this.errors = {};
             for (let obj of error.response.data) {
-              this.$set(this.errors, obj.attributeName, obj.message);
+              if (obj.attributeName === undefined) {
+                obj.attributeName = "idNumber";
+              }
+              this.errors[obj.attributeName] = obj.message;
             }
+          } else {
+            if (error.response.data.attributeName === undefined) {
+              error.response.data.attributeName = "idNumber";
+            }
+            this.errors[error.response.data.attributeName] =
+              error.response.data.error.sqlMessage;
           }
         });
     },
@@ -120,8 +154,8 @@ export default {
             crossOrigin: true,
           })
           .then((response) => {
-            this.$set(this.student, "city", response.data.city);
-            this.$set(this.student, "state", response.data.state_code);
+            this.student.city = response.data.city;
+            this.student.state = response.data.state_code;
           })
           .catch((error) => {
             console.log("There was an error:", error.response);

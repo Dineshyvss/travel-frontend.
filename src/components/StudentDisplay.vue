@@ -1,4 +1,5 @@
 <template>
+  <div class="grid-item">{{ student.idNumber }}</div>
   <div class="grid-item">{{ student.firstName }} {{ student.lastName }}</div>
   <div class="grid-item">
     <router-link
