@@ -1,5 +1,5 @@
 {
-  "name": "tutorial-frontend-vue3",
+  "name": "todo-frontend-vue3",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@mdi/js": "^7.0.96",
-    "@vitejs/plugin-vue": "^3.2.0",
+    "@vitejs/plugin-vue": "^4.0.0",
     "vite": "^4.0.1"
   }
 }

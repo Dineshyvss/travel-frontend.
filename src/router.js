@@ -1,26 +1,32 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import StudentList from "./views/StudentList.vue";
-import AddStudent from "./views/AddStudent.vue";
-import EditStudent from "./views/EditStudent.vue";
+import Login from "./views/Login.vue";
+import TodoList from "./views/TodoList.vue";
+import AddList from "./views/AddList.vue";
+import EditList from "./views/EditList.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      name: "list",
-      component: StudentList,
+      name: "login",
+      component: Login,
+    },
+    {
+      path: "/lists",
+      name: "lists",
+      component: TodoList,
     },
     {
       path: "/add",
-      name: "addStudent",
-      component: AddStudent,
+      name: "addList",
+      component: AddList,
     },
     {
       path: "/edit/:id",
-      name: "editStudent",
-      component: EditStudent,
+      name: "editList",
+      component: EditList,
       props: true,
     },
   ],

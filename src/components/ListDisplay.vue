@@ -1,9 +1,8 @@
 <template>
-  <div class="grid-item">{{ student.idNumber }}</div>
-  <div class="grid-item">{{ student.firstName }} {{ student.lastName }}</div>
+  <div class="grid-item">{{ list.name }}</div>
   <div class="grid-item">
     <router-link
-      :to="{ name: 'editStudent', params: { id: student.id } }"
+      :to="{ name: 'editList', params: { id: list.id } }"
       custom
       v-slot="{ navigate }"
     >
@@ -18,15 +17,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <span @click="this.show = false" class="close">&times;</span>
-        <p>
-          Are you sure you want to delete {{ student.firstName }}
-          {{ student.lastName }}?
-        </p>
+        <p>Are you sure you want to delete {{ list.name }}?</p>
       </div>
       <br />
       <div class="modal-body">
         <button v-on:click="this.show = false">No, cancel</button>
-        <button class="error" v-on:click="deleteStudent()">Yes, delete</button>
+        <button class="error" v-on:click="deleteList()">Yes, delete</button>
       </div>
     </div>
   </div>
@@ -36,7 +32,7 @@
 import axios from "axios";
 export default {
   props: {
-    student: Object,
+    list: Object,
   },
   data() {
     return {
@@ -44,23 +40,23 @@ export default {
       errors: [],
     };
   },
-  emits: ["deletedStudent"],
+  emits: ["deletedList"],
   setup(props, { emit }) {
-    const deletedStudent = (event) => {
-      emit("deletedStudent");
+    const deletedList = (event) => {
+      emit("deletedList");
     };
     return {
-      deletedStudent,
+      deletedList,
     };
   },
   methods: {
-    deleteStudent() {
+    deleteList() {
       axios
-        .delete("http://localhost/api/students/" + this.student.id)
+        .delete("http://localhost/todoapi/lists/" + this.list.id)
         .then((response) => {
           this.errors = response.data;
           this.show = false;
-          this.deletedStudent();
+          this.deletedList();
         })
         .catch((error) => {
           this.errors = error.data;

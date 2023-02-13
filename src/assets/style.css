@@ -114,7 +114,7 @@ button {
 .grid-container {
   display: grid;
   gap: 20px 20px;
-  grid-template-columns: 100px 150px 120px 150px;
+  grid-template-columns: 150px 120px 150px;
   padding: 10px;
   align-content: center;
   justify-content: center;

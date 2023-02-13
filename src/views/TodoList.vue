@@ -1,39 +1,39 @@
 <template>
   <div id="body">
-    <h1>Student List</h1>
+    <h1>To-Do Lists</h1>
     <br />
     <div class="grid-container">
-      <StudentDisplay
-        v-for="student in students"
-        :key="student.id"
-        :student="student"
-        @deletedStudent="getStudents()"
+      <ListDisplay
+        v-for="list in lists"
+        :key="list.id"
+        :list="list"
+        @deletedList="getLists()"
       />
     </div>
   </div>
 </template>
 
 <script>
-import StudentDisplay from "../components/StudentDisplay.vue";
+import ListDisplay from "../components/ListDisplay.vue";
 import axios from "axios";
 export default {
   components: {
-    StudentDisplay,
+    ListDisplay,
   },
   data() {
     return {
-      students: [],
+      lists: [],
     };
   },
   created() {
-    this.getStudents();
+    this.getLists();
   },
   methods: {
-    getStudents() {
+    getLists() {
       axios
-        .get("http://localhost/api/students", { crossOrigin: true })
+        .get("http://localhost/todoapi/lists/", { crossOrigin: true })
         .then((response) => {
-          this.students = response.data;
+          this.lists = response.data;
         })
         .catch((error) => {
           console.log("There was an error:", error.response);

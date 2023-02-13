@@ -10,7 +10,7 @@ import ocLogo from "/oc-logo-white.png";
       <ul class="nav-links">
         <div class="title">
           <li>
-            <router-link :to="{ name: 'list' }">
+            <router-link :to="{ name: 'lists' }">
               <img :src="logoURL" contain />
             </router-link>
           </li>
@@ -22,12 +22,10 @@ import ocLogo from "/oc-logo-white.png";
       <ul class="nav-links">
         <div class="menu">
           <li>
-            <router-link :to="{ name: 'list' }"><a>LIST</a></router-link>
+            <router-link :to="{ name: 'lists' }"><a>LIST</a></router-link>
           </li>
           <li>
-            <router-link :to="{ name: 'addStudent' }"
-              ><a>ADD STUDENT</a></router-link
-            >
+            <router-link :to="{ name: 'addList' }"><a>ADD LIST</a></router-link>
           </li>
         </div>
       </ul>
@@ -43,7 +41,7 @@ export default {
   },
   data() {
     return {
-      title: "Student Listing",
+      title: "To-Do Lists",
       logoURL: "",
     };
   },

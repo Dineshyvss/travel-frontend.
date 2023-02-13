@@ -138,7 +138,7 @@ export default {
       axios
         .put("http://localhost/api/students/" + this.id, this.student)
         .then(() => {
-          this.$router.push({ name: "list" });
+          this.$router.push({ name: "lists" });
         })
         .catch((error) => {
           if (error.response.status == "406") {
@@ -156,7 +156,7 @@ export default {
         });
     },
     cancel() {
-      this.$router.push({ name: "list" });
+      this.$router.push({ name: "lists" });
     },
     cityStateLookup() {
       if (this.student.zip != "") {
