@@ -18,17 +18,19 @@ npm install
     - We recommend using XAMPP to serve this project.
     - In XAMPP, make sure that **Apache** is running.
 
-7. Compile and run the project locally.
+4. Compile and run the project locally.
 ```
 npm run dev
 ```
 
-10. (Optional) Compile the project for production.
+5. Open http://localhost:8081 in a browser to view the project running.
+
+6. (Optional) Compile the project for production.
 ```
 npm run build
 ```
 
-11. (Optional) Lint and fix the project files.
+7. (Optional) Lint and fix the project files.
 ```
 npm run lint
 ```
