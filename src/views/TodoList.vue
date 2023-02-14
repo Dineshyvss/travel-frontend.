@@ -5,7 +5,12 @@
     <p>{{ message }}</p>
 
     <div class="grid-container">
-      <ListDisplay v-for="list in lists" :key="list.id" :list="list" />
+      <ListDisplay
+        v-for="list in lists"
+        :key="list.id"
+        :list="list"
+        @deletedList="getLists()"
+      />
     </div>
   </div>
 </template>

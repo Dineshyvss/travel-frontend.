@@ -4,21 +4,23 @@
     <br />
     <p class="text-error">{{ message }}</p>
 
-    <div class="form-group">
-      <label for="username"> Username </label>
-      <input v-model="user.username" type="text" id="username" />
+    <div class="form">
+      <div class="form-group">
+        <label for="username"> Username </label>
+        <input v-model="user.username" type="text" id="username" />
+      </div>
+
+      <div class="form-group">
+        <label for="password"> Password </label>
+        <input v-model="user.password" type="text" id="password" />
+      </div>
+
+      <br />
+      <button class="success" name="Login" v-on:click.prevent="login()">
+        Login
+      </button>
+      <button @click="this.show = true">Create Account</button>
     </div>
-
-    <div class="form-group">
-      <label for="password"> Password </label>
-      <input v-model="user.password" type="text" id="password" />
-    </div>
-
-    <button class="success" name="Login" v-on:click.prevent="login()">
-      Login
-    </button>
-    <button @click="this.show = true">Create Account</button>
-
     <div v-if="show" class="modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -83,7 +85,6 @@ export default {
         .then((response) => {
           localStorage.setItem("token", response.data.token);
           this.$router.push({ name: "lists" });
-          this.$forceUpdate();
         })
         .catch((error) => {
           console.log(error);

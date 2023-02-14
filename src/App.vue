@@ -30,6 +30,7 @@ import ocLogo from "/oc-logo-white.png";
           <li>
             <a v-on:click="logout()">
               LOGOUT {{ user.firstName.toUpperCase() }}
+              {{ user.lastName.toUpperCase() }}
             </a>
           </li>
         </div>

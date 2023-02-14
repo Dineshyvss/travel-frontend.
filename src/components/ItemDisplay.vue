@@ -70,15 +70,6 @@ export default {
       updateItem,
     };
   },
-  methods: {
-    // deleteItem() {
-    //   this.$emit("deleteItem");
-    // },
-    // updateItem() {
-    //   this.$emit("updateItem");
-    //   this.editItem = false;
-    // },
-  },
 };
 </script>
 

@@ -22,7 +22,15 @@
       <br />
       <div class="modal-body">
         <button v-on:click="this.show = false">No, cancel</button>
-        <button class="error" v-on:click="deleteList()">Yes, delete</button>
+        <button
+          class="error"
+          v-on:click="
+            deleteList();
+            this.show = false;
+          "
+        >
+          Yes, delete
+        </button>
       </div>
     </div>
   </div>
@@ -40,12 +48,20 @@ export default {
       show: false,
     };
   },
+  emits: ["deletedList"],
+  setup(props, { emit }) {
+    const deletedList = (event) => {
+      emit("deletedList");
+    };
+    return {
+      deletedList,
+    };
+  },
   methods: {
     deleteList() {
-      ListServices.deleteList(this.id)
-        .then((response) => {
-          this.$router.push({ name: "lists" });
-          console.log(response);
+      ListServices.deleteList(this.list.id)
+        .then(() => {
+          this.deletedList();
         })
         .catch((error) => {
           console.log(error.data);
