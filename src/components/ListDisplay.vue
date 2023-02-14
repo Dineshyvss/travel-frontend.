@@ -29,7 +29,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import ListServices from "../services/ListServices.js";
+
 export default {
   props: {
     list: Object,
@@ -37,33 +38,19 @@ export default {
   data() {
     return {
       show: false,
-      errors: [],
-    };
-  },
-  emits: ["deletedList"],
-  setup(props, { emit }) {
-    const deletedList = (event) => {
-      emit("deletedList");
-    };
-    return {
-      deletedList,
     };
   },
   methods: {
     deleteList() {
-      axios
-        .delete("http://localhost/todoapi/lists/" + this.list.id)
+      ListServices.deleteList(this.id)
         .then((response) => {
-          this.errors = response.data;
-          this.show = false;
-          this.deletedList();
+          this.$router.push({ name: "lists" });
+          console.log(response);
         })
         .catch((error) => {
-          this.errors = error.data;
+          console.log(error.data);
         });
     },
   },
 };
 </script>
-
-<style></style>

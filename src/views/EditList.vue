@@ -1,180 +1,139 @@
 <template>
   <div id="body">
-    <h1>Student Edit</h1>
-    <h4>{{ student.firstName }} {{ student.lastName }}</h4>
-    <br />
+    <h1>Edit List</h1>
+    <h4>{{ list.name }}</h4>
+
+    <p>{{ message }}</p>
     <div class="form">
       <div class="form-group">
-        <label for="idNumber">
-          OC ID Number
-          <span id="idNumberErr" class="text-error">{{
-            errors.idNumber || "*"
-          }}</span>
-        </label>
-        <input v-model="student.idNumber" type="text" id="idNumber" />
+        <label for="name"> Name </label>
+        <input v-model="list.name" type="text" id="name" />
       </div>
 
-      <div class="form-group">
-        <label for="fname">
-          First Name
-          <span id="firstNameErr" class="text-error">{{
-            errors.firstName || "*"
-          }}</span>
-        </label>
-        <input v-model="student.firstName" type="text" id="fname" />
-      </div>
-
-      <div class="form-group">
-        <label for="lname">
-          Last Name
-          <span id="lastNameErr" class="text-error">{{
-            errors.lastName || "*"
-          }}</span>
-        </label>
-        <input v-model="student.lastName" type="text" id="lname" />
-      </div>
-
-      <div class="form-group">
-        <label for="zip">
-          ZIP
-          <span id="zipErr" class="text-error">{{ errors.zip || "*" }}</span>
-        </label>
-        <input
-          v-model="student.zip"
-          type="text"
-          id="zip"
-          v-on:blur="cityStateLookup()"
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="city">
-          City
-          <span id="cityErr" class="text-error">{{ errors.city || "*" }}</span>
-        </label>
-        <input v-model="student.city" type="text" id="city" />
-      </div>
-
-      <div class="form-group">
-        <label for="state">
-          State
-          <span id="stateErr" class="text-error">{{
-            errors.state || "*"
-          }}</span>
-        </label>
-        <input v-model="student.state" type="text" id="state" />
-      </div>
-
-      <div class="form-group">
-        <label for="email">
-          Email
-          <span id="emailErr" class="text-error">{{
-            errors.email || "*"
-          }}</span>
-        </label>
-        <input v-model="student.email" type="text" id="email" />
-      </div>
-
-      <div class="form-group">
-        <label for="classification">
-          Classification
-          <span id="classificationErr" class="text-error">{{
-            errors.classification || "*"
-          }}</span>
-        </label>
-        <select v-model="student.classification" id="classification">
-          <option value="FR">Freshman</option>
-          <option value="SO">Sophomore</option>
-          <option value="JR">Junior</option>
-          <option value="SR">Senior</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="gender">
-          Gender
-          <span id="genderErr" class="text-error">{{
-            errors.gender || "*"
-          }}</span>
-        </label>
-        <select v-model="student.gender" id="gender">
-          <option value="F">Female</option>
-          <option value="M">Male</option>
-        </select>
-      </div>
+      <br />
+      <button name="add" v-on:click.prevent="addItemDisplay = true">
+        Add Item
+      </button>
+      <button class="success" name="Save" v-on:click.prevent="updateList()">
+        Update List
+      </button>
+      <button class="error" name="Cancel" v-on:click.prevent="cancel()">
+        Cancel
+      </button>
     </div>
-    <br />
-    <button class="success" name="Save" v-on:click.prevent="updateStudent()">
-      Update
-    </button>
-    <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>
+  </div>
+
+  <div
+    class="item-container"
+    style="grid-template-columns: 150px 150px 150px 320px"
+  >
+    <div class="grid-item"><h4>NAME</h4></div>
+    <div class="grid-item"><h4>DESCRIPTION</h4></div>
+    <div class="grid-item"><h4>STATE</h4></div>
+    <div class="grid-item"><h4>ACTIONS</h4></div>
+  </div>
+
+  <div class="item-container">
+    <ItemDisplay
+      v-for="item in items"
+      :key="item.id"
+      :item="item"
+      @deleteItem="deleteItem(item.id)"
+      @updateItem="updateItem(item)"
+    />
+    <ItemAdd
+      v-if="addItemDisplay"
+      @addItem="addItem"
+      @cancelAdd="addItemDisplay = false"
+    />
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import ListServices from "../services/ListServices.js";
+import ItemDisplay from "../components/ItemDisplay.vue";
+import ItemAdd from "../components/ItemAdd.vue";
+
 export default {
   props: ["id"],
-
+  components: {
+    ItemDisplay,
+    ItemAdd,
+  },
   data() {
     return {
-      student: {},
-      errors: {},
+      list: {},
+      items: {},
+      message: "Make updates to the List",
+      addItemDisplay: false,
     };
   },
   created() {
-    axios
-      .get("http://localhost/api/students/" + this.id, { crossOrigin: true })
-      .then((response) => {
-        this.student = response.data[0];
-      })
-      .catch((error) => {
-        console.log("There was an error:", error.response);
-      });
+    this.getList();
+    this.getItems();
   },
-
   methods: {
-    updateStudent() {
-      axios
-        .put("http://localhost/api/students/" + this.id, this.student)
+    getList() {
+      ListServices.getList(this.id)
+        .then((response) => {
+          this.list = response.data.list;
+        })
+        .catch((error) => {
+          console.log("There was an error:", error.response);
+        });
+    },
+    getItems() {
+      ListServices.getListItems(this.id)
+        .then((response) => {
+          this.items = response.data.items;
+        })
+        .catch((error) => {
+          console.log("There was an error:", error.response);
+        });
+    },
+    updateList() {
+      ListServices.updateList(this.id, this.list)
         .then(() => {
           this.$router.push({ name: "lists" });
         })
         .catch((error) => {
-          if (error.response.status == "406") {
-            this.errors = {};
-            for (let obj of error.response.data) {
-              this.errors[obj.attributeName] = obj.message;
-            }
-          } else {
-            if (error.response.data.attributeName === undefined) {
-              error.response.data.attributeName = "idNumber";
-            }
-            this.errors[error.response.data.attributeName] =
-              error.response.data.error.sqlMessage;
-          }
+          this.message = error.response.data.message;
+        });
+    },
+    addItem(item) {
+      console.log(item);
+      ListServices.addListItem(this.id, item)
+        .then((response) => {
+          item.id = response.data.itemId;
+          this.message = "Added Item";
+          this.items.push(item);
+          this.addItemDisplay = false;
+        })
+        .catch((error) => {
+          this.message = error.response.data.message;
         });
     },
     cancel() {
       this.$router.push({ name: "lists" });
     },
-    cityStateLookup() {
-      if (this.student.zip != "") {
-        axios
-          .get("http://localhost/api/zip/" + this.student.zip, {
-            crossOrigin: true,
-          })
-          .then((response) => {
-            this.student.city = response.data.city;
-            this.student.state = response.data.state_code;
-          })
-          .catch((error) => {
-            console.log("There was an error:", error.response);
+    updateItem(item) {
+      ListServices.updateListItem(this.id, item.id, item).catch((error) => {
+        this.message = error.data.message;
+      });
+    },
+    deleteItem(id) {
+      ListServices.deleteListItem(this.id, id)
+        .then(() => {
+          this.items.forEach((item, i) => {
+            if (item.id == id) {
+              this.items.splice(i, 1);
+            }
           });
-      }
+        })
+        .catch((error) => {
+          this.message = error.response.data.message;
+        });
     },
   },
 };
 </script>
-
-<style></style>

@@ -2,20 +2,18 @@
   <div id="body">
     <h1>To-Do Lists</h1>
     <br />
+    <p>{{ message }}</p>
+
     <div class="grid-container">
-      <ListDisplay
-        v-for="list in lists"
-        :key="list.id"
-        :list="list"
-        @deletedList="getLists()"
-      />
+      <ListDisplay v-for="list in lists" :key="list.id" :list="list" />
     </div>
   </div>
 </template>
 
 <script>
 import ListDisplay from "../components/ListDisplay.vue";
-import axios from "axios";
+import ListServices from "../services/ListServices.js";
+
 export default {
   components: {
     ListDisplay,
@@ -23,6 +21,7 @@ export default {
   data() {
     return {
       lists: [],
+      message: "",
     };
   },
   created() {
@@ -30,13 +29,13 @@ export default {
   },
   methods: {
     getLists() {
-      axios
-        .get("http://localhost/todoapi/lists/", { crossOrigin: true })
+      ListServices.getLists()
         .then((response) => {
-          this.lists = response.data;
+          this.lists = response.data.lists;
         })
         .catch((error) => {
-          console.log("There was an error:", error.response);
+          console.log(error);
+          this.message = error.response.data.message;
         });
     },
   },

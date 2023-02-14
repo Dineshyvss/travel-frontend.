@@ -20,12 +20,17 @@ import ocLogo from "/oc-logo-white.png";
         </div>
       </ul>
       <ul class="nav-links">
-        <div class="menu">
+        <div v-if="loggedIn" class="menu">
           <li>
-            <router-link :to="{ name: 'lists' }"><a>LIST</a></router-link>
+            <router-link :to="{ name: 'lists' }"><a>LISTS</a></router-link>
           </li>
           <li>
             <router-link :to="{ name: 'addList' }"><a>ADD LIST</a></router-link>
+          </li>
+          <li>
+            <a v-on:click="logout()">
+              LOGOUT {{ user.firstName.toUpperCase() }}
+            </a>
           </li>
         </div>
       </ul>
@@ -35,6 +40,8 @@ import ocLogo from "/oc-logo-white.png";
 </template>
 
 <script>
+import ListServices from "./services/ListServices.js";
+
 export default {
   components: {
     ocLogo,
@@ -43,10 +50,48 @@ export default {
     return {
       title: "To-Do Lists",
       logoURL: "",
+      user: {},
+      loggedIn: false,
     };
   },
   created() {
     this.logoURL = ocLogo;
+    this.getUser();
+  },
+  mounted() {
+    this.getUser();
+  },
+  methods: {
+    getUser() {
+      if (
+        localStorage.getItem("token") !== null &&
+        localStorage.getItem("token") !== "" &&
+        localStorage.getItem("token") !== undefined
+      ) {
+        ListServices.getUser()
+          .then((response) => {
+            this.user = response.data.user;
+            this.loggedIn = true;
+          })
+          .catch((error) => {
+            console.log(error);
+            this.loggedIn = false;
+            this.user = null;
+            localStorage.setItem("token", "");
+          });
+      }
+    },
+    logout() {
+      ListServices.logoutUser(this.user)
+        .then(() => {
+          localStorage.setItem("token", "");
+          this.$router.push({ name: "login" });
+          this.loggedIn = false;
+        })
+        .catch((error) => {
+          this.message = error.response.data.message;
+        });
+    },
   },
 };
 </script>
