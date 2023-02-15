@@ -1,6 +1,6 @@
 # To-Do List Frontend with Vue 3
 
-This application allows users to create and maintain a list of students. Please visit https://github.com/OC-ComputerScience/student-backend for the backend repository.
+This application allows users to create and maintain to-do lists. Please visit https://github.com/OC-ComputerScience/todo-backend for the backend repository.
 
 ## Project Setup
 
