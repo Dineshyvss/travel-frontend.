@@ -32,13 +32,13 @@
           <p class="text-error">{{ message }}</p>
           <div class="form" style="font-size: 1rem">
             <div class="form-group">
-              <label for="fname"> First Name </label>
-              <input v-model="newUser.firstName" type="text" id="fname" />
+              <label for="firstName"> First Name </label>
+              <input v-model="newUser.firstName" type="text" id="firstName" />
             </div>
 
             <div class="form-group">
-              <label for="lname"> Last Name </label>
-              <input v-model="newUser.lastName" type="text" id="lname" />
+              <label for="lastName"> Last Name </label>
+              <input v-model="newUser.lastName" type="text" id="lastName" />
             </div>
             <div class="form-group">
               <label for="username"> Username </label>

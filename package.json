@@ -1,6 +1,5 @@
 {
-  "name": "todo-frontend-vue3",
-  "private": true,
+  "name": "recipe-frontend",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
