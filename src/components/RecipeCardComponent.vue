@@ -1,5 +1,8 @@
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, defineProps } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const showDetails = ref(false);
 const ingredients = ref([]);
@@ -27,10 +30,14 @@ function buildIngredientList() {
     }
   }
 }
+
+function navigateToEdit() {
+  router.push({ name: "viewRecipe", params: { id: props.recipe.id } });
+}
 </script>
 
 <template>
-  <v-card class="recipe-card" @click="showDetails = !showDetails">
+  <v-card class="recipe-card mb-8" @click="showDetails = !showDetails">
     <v-card-title class="headline">
       {{ recipe.name }}
       <v-chip class="ma-2" color="primary" label>
@@ -41,6 +48,7 @@ function buildIngredientList() {
         <v-icon start icon="mdi-clock-outline"></v-icon>
         {{ recipe.time }} minutes
       </v-chip>
+      <v-icon size="small" icon="mdi-pencil" @click="navigateToEdit()"></v-icon>
     </v-card-title>
     <v-card-text class="body-1">
       {{ recipe.description }}

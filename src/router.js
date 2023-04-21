@@ -13,6 +13,12 @@ const router = createRouter({
       name: "addRecipe",
       component: () => import("./views/AddRecipe.vue"),
     },
+    {
+      path: "/recipe/:id",
+      name: "viewRecipe",
+      props: true,
+      component: () => import("./views/ViewRecipe.vue"),
+    },
   ],
 });
 
