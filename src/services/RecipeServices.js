@@ -2,9 +2,9 @@ import axios from "axios";
 
 var baseurl = "";
 if (process.env.NODE_ENV === "development") {
-  baseurl = "http://localhost/todoapi/";
+  baseurl = "http://localhost/recipeapi/";
 } else {
-  baseurl = "/todoapi/";
+  baseurl = "/recipeapi/";
 }
 
 const apiClient = axios.create({
@@ -35,33 +35,22 @@ const apiClient = axios.create({
 });
 
 export default {
-  getLists() {
-    return apiClient.get("lists");
+  getRecipes() {
+    return apiClient.get("recipes");
   },
-  getList(id) {
-    return apiClient.get("lists/" + id);
+  getRecipe(id) {
+    return apiClient.get("recipes/" + id);
   },
-  addList(list) {
-    return apiClient.post("lists", list);
+  addRecipe(recipe) {
+    return apiClient.post("recipes", recipe);
   },
-  updateList(listId, list) {
-    return apiClient.put("lists/" + listId, list);
+  updateRecipe(recipeId, recipe) {
+    return apiClient.put("recipes/" + recipeId, recipe);
   },
-  deleteList(listId) {
-    return apiClient.delete("lists/" + listId);
+  deleteRecipe(recipeId) {
+    return apiClient.delete("recipes/" + recipeId);
   },
-  getListItems(listId) {
-    return apiClient.get("lists/" + listId + "/items");
-  },
-  addListItem(listId, item) {
-    return apiClient.post("lists/" + listId + "/items", item);
-  },
-  updateListItem(listId, itemId, item) {
-    return apiClient.put("lists/" + listId + "/items/" + itemId, item);
-  },
-  deleteListItem(listId, itemId) {
-    return apiClient.delete("lists/" + listId + "/items/" + itemId);
-  },
+
   getUser() {
     return apiClient.get("users");
   },
