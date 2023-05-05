@@ -5,15 +5,17 @@ import IngredientServices from "../services/IngredientServices.js";
 
 const ingredients = ref([]);
 const isAdd = ref(false);
+const isEdit = ref(false);
 const snackbar = reactive({
   value: false,
   color: "",
   text: "",
 });
 const newIngredient = reactive({
-  name: "",
-  unit: "",
-  pricePerUnit: 0.0,
+  id: undefined,
+  name: undefined,
+  unit: undefined,
+  pricePerUnit: undefined,
 });
 
 onMounted(async () => {
@@ -24,7 +26,6 @@ async function getIngredients() {
   await IngredientServices.getIngredients()
     .then((response) => {
       ingredients.value = response.data;
-      console.log(ingredients);
     })
     .catch((error) => {
       console.log(error);
@@ -37,6 +38,7 @@ async function getIngredients() {
 async function addIngredient() {
   console.log(newIngredient.name);
   isAdd.value = false;
+  delete newIngredient.id;
   await IngredientServices.addIngredient(newIngredient)
     .then(() => {
       snackbar.value = true;
@@ -52,8 +54,46 @@ async function addIngredient() {
   await getIngredients();
 }
 
+async function updateIngredient() {
+  console.log(newIngredient);
+  console.log(newIngredient.name);
+  isEdit.value = false;
+  await IngredientServices.updateIngredient(newIngredient)
+    .then(() => {
+      snackbar.value = true;
+      snackbar.color = "green";
+      snackbar.text = `${newIngredient.name} updated successfully!`;
+    })
+    .catch((error) => {
+      console.log(error);
+      snackbar.value = true;
+      snackbar.color = "error";
+      snackbar.text = error.response.data.message;
+    });
+  await getIngredients();
+}
+
 function openAdd() {
+  newIngredient.name = undefined;
+  newIngredient.unit = undefined;
+  newIngredient.pricePerUnit = undefined;
   isAdd.value = true;
+}
+
+function closeAdd() {
+  isAdd.value = false;
+}
+
+function openEdit(item) {
+  newIngredient.id = item.id;
+  newIngredient.name = item.name;
+  newIngredient.unit = item.unit;
+  newIngredient.pricePerUnit = item.pricePerUnit;
+  isEdit.value = true;
+}
+
+function closeEdit() {
+  isEdit.value = false;
 }
 
 function closeSnackBar() {
@@ -81,6 +121,7 @@ function closeSnackBar() {
             <th class="text-left">Name</th>
             <th class="text-left">Unit</th>
             <th class="text-left">Price Per Unit</th>
+            <th class="text-left">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -88,14 +129,23 @@ function closeSnackBar() {
             <td>{{ item.name }}</td>
             <td>{{ item.unit }}</td>
             <td>${{ item.pricePerUnit }}</td>
+            <td>
+              <v-icon
+                size="small"
+                icon="mdi-pencil"
+                @click="openEdit(item)"
+              ></v-icon>
+            </td>
           </tr>
         </tbody>
       </v-table>
 
-      <v-dialog v-model="isAdd" width="800">
+      <v-dialog persistent :model-value="isAdd || isEdit" width="800">
         <v-card>
           <v-card-item>
-            <v-card-title class="headline mb-2">Add Ingredient </v-card-title>
+            <v-card-title class="headline mb-2"
+              >{{ isAdd ? "Add Ingredient" : isEdit ? "Edit Ingredient" : "" }}
+            </v-card-title>
           </v-card-item>
           <v-card-text>
             <v-text-field
@@ -109,15 +159,28 @@ function closeSnackBar() {
               label="Unit"
             ></v-text-field>
             <v-text-field
-              v-model.number="newIngredient.pricePerUnit"
+              v-model="newIngredient.pricePerUnit"
               label="Price Per Unit"
               type="number"
             ></v-text-field>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn variant="flat" color="primary" @click="addIngredient()"
-              >Add Ingredient</v-btn
+            <v-btn
+              variant="flat"
+              color="secondary"
+              @click="isAdd ? closeAdd() : isEdit ? closeEdit() : false"
+              >Close</v-btn
+            >
+            <v-btn
+              variant="flat"
+              color="primary"
+              @click="
+                isAdd ? addIngredient() : isEdit ? updateIngredient() : false
+              "
+              >{{
+                isAdd ? "Add Ingredient" : isEdit ? "Update Ingredient" : ""
+              }}</v-btn
             >
           </v-card-actions>
         </v-card>

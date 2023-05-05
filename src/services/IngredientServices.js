@@ -10,8 +10,8 @@ export default {
   addIngredient(ingredient) {
     return apiClient.post("ingredients", ingredient);
   },
-  updateIngredient(ingredientId, ingredient) {
-    return apiClient.put("ingredients/" + ingredientId, ingredient);
+  updateIngredient(ingredient) {
+    return apiClient.put("ingredients/" + ingredient.id, ingredient);
   },
   deleteIngredient(ingredientId) {
     return apiClient.delete("ingredients/" + ingredientId);

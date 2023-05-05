@@ -58,6 +58,10 @@ function openAdd() {
   isAdd.value = true;
 }
 
+function closeAdd() {
+  isAdd.value = false;
+}
+
 function closeSnackBar() {
   snackbar.value = false;
 }
@@ -84,7 +88,7 @@ function closeSnackBar() {
         @deletedList="getLists()"
       />
 
-      <v-dialog v-model="isAdd" width="800">
+      <v-dialog persistent v-model="isAdd" width="800">
         <v-card>
           <v-card-item>
             <v-card-title class="headline mb-2">Add Recipe </v-card-title>
@@ -113,6 +117,9 @@ function closeSnackBar() {
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn variant="flat" color="secondary" @click="closeAdd()"
+              >Close</v-btn
+            >
             <v-btn variant="flat" color="primary" @click="addRecipe()"
               >Add Recipe</v-btn
             >
