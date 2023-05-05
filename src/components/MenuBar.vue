@@ -28,7 +28,7 @@ onMounted(() => {
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn class="mx-2" :to="{ name: 'recipes' }"> Recipes </v-btn>
-      <v-btn class="mx-2" :to="{ name: 'addRecipe' }"> Add </v-btn>
+      <v-btn class="mx-2" :to="{ name: 'ingredients' }"> Ingredients </v-btn>
     </v-app-bar>
   </div>
 </template>

@@ -8,6 +8,7 @@ const router = useRouter();
 const route = useRoute();
 
 const recipe = ref({});
+const isAdd = ref(false);
 
 onMounted(() => {
   getRecipe();
@@ -43,14 +44,27 @@ function getRecipe() {
     ></v-text-field>
 
     <v-row>
-      <v-col> Step </v-col>
+      <v-col cols="2"> Step </v-col>
       <v-col> Description </v-col>
     </v-row>
 
     <StepComponent
       v-for="step in recipe.recipeStep"
       :recipeStep="step"
+      :isAdd="false"
+      @addOrUpdateStep="addOrUpdateStep"
+      @deleteStep="deleteStep"
     ></StepComponent>
+
+    <StepComponent
+      v-if="isAdd"
+      :recipeStep="{}"
+      :isAdd="true"
+      @addOrUpdateStep="addOrUpdateStep"
+      @cancelStep="isAdd = false"
+    ></StepComponent>
+
+    <v-btn color="primary" @click="isAdd = true">Add Step</v-btn>
 
     <v-btn color="primary" @click="updateRecipe()">Update Recipe</v-btn>
   </v-container>

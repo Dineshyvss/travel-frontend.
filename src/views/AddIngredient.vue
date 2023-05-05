@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-import RecipeServices from "../services/RecipeServices";
+import IngredientServices from "../services/IngredientServices";
 
 const router = useRouter();
 
@@ -13,11 +13,11 @@ const recipe = reactive({
 });
 
 function saveRecipe() {
-  console.log(recipe);
-  RecipeServices.addRecipe(recipe)
+  console.log(ingredient);
+  IngredientServices.addIngredient(ingredient)
     .then(() => {
-      console.log("Recipe added");
-      router.push({ name: "recipes" });
+      console.log("Ingredient added");
+      router.push({ name: "ingredients" });
     })
     .catch((error) => {
       console.log(error);
