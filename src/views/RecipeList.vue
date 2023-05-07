@@ -72,7 +72,7 @@ function closeSnackBar() {
     <div id="body">
       <v-row align="center" class="mb-4">
         <v-col cols="10"
-          ><v-card-title class="text-h4 font-weight-bold"
+          ><v-card-title class="pl-0 text-h4 font-weight-bold"
             >Recipes
           </v-card-title>
         </v-col>
@@ -89,7 +89,7 @@ function closeSnackBar() {
       />
 
       <v-dialog persistent v-model="isAdd" width="800">
-        <v-card>
+        <v-card class="rounded-lg elevation-5">
           <v-card-item>
             <v-card-title class="headline mb-2">Add Recipe </v-card-title>
           </v-card-item>

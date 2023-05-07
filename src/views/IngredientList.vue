@@ -3,6 +3,22 @@ import { onMounted } from "vue";
 import { ref, reactive } from "vue";
 import IngredientServices from "../services/IngredientServices.js";
 
+const units = [
+  "cup",
+  "gallon",
+  "gram",
+  "kilogram",
+  "liter",
+  "milliliter",
+  "ounce",
+  "pint",
+  "pound",
+  "quart",
+  "tablespoon",
+  "teaspoon",
+  "unit",
+];
+
 const ingredients = ref([]);
 const isAdd = ref(false);
 const isEdit = ref(false);
@@ -36,7 +52,6 @@ async function getIngredients() {
 }
 
 async function addIngredient() {
-  console.log(newIngredient.name);
   isAdd.value = false;
   delete newIngredient.id;
   await IngredientServices.addIngredient(newIngredient)
@@ -55,8 +70,6 @@ async function addIngredient() {
 }
 
 async function updateIngredient() {
-  console.log(newIngredient);
-  console.log(newIngredient.name);
   isEdit.value = false;
   await IngredientServices.updateIngredient(newIngredient)
     .then(() => {
@@ -106,7 +119,7 @@ function closeSnackBar() {
     <div id="body">
       <v-row align="center" class="mb-4">
         <v-col cols="10"
-          ><v-card-title class="text-h4 font-weight-bold"
+          ><v-card-title class="pl-0 text-h4 font-weight-bold"
             >Ingredients
           </v-card-title>
         </v-col>
@@ -115,7 +128,7 @@ function closeSnackBar() {
         </v-col>
       </v-row>
 
-      <v-table>
+      <v-table class="rounded-lg elevation-5">
         <thead>
           <tr>
             <th class="text-left">Name</th>
@@ -141,7 +154,7 @@ function closeSnackBar() {
       </v-table>
 
       <v-dialog persistent :model-value="isAdd || isEdit" width="800">
-        <v-card>
+        <v-card class="rounded-lg elevation-5">
           <v-card-item>
             <v-card-title class="headline mb-2"
               >{{ isAdd ? "Add Ingredient" : isEdit ? "Edit Ingredient" : "" }}
@@ -153,11 +166,13 @@ function closeSnackBar() {
               label="Name"
               required
             ></v-text-field>
-
-            <v-text-field
+            <v-select
               v-model="newIngredient.unit"
+              :items="units"
               label="Unit"
-            ></v-text-field>
+              required
+            >
+            </v-select>
             <v-text-field
               v-model="newIngredient.pricePerUnit"
               label="Price Per Unit"

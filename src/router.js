@@ -10,9 +10,9 @@ const router = createRouter({
     },
     {
       path: "/recipe/:id",
-      name: "viewRecipe",
+      name: "editRecipe",
       props: true,
-      component: () => import("./views/ViewRecipe.vue"),
+      component: () => import("./views/EditRecipe.vue"),
     },
     {
       path: "/ingredients",
