@@ -1,17 +1,17 @@
 <script setup>
 import { onMounted } from "vue";
-import { ref, reactive } from "vue";
+import { ref, toRaw } from "vue";
 import { useRouter } from "vue-router";
 import UserServices from "../services/UserServices.js";
 
 const router = useRouter();
 const isCreateAccount = ref(false);
-const snackbar = reactive({
+const snackbar = ref({
   value: false,
   color: "",
   text: "",
 });
-const user = reactive({
+const user = ref({
   firstName: "",
   lastName: "",
   email: "",
@@ -25,35 +25,36 @@ function navigateToRecipes() {
 }
 
 async function createAccount() {
-  await UserServices.addUser(user)
+  await UserServices.addUser(user.value)
     .then(() => {
-      snackbar.value = true;
-      snackbar.color = "green";
-      snackbar.text = "Account created successfully!";
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = "Account created successfully!";
       router.push({ name: "recipes" });
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
 }
 
 async function login() {
+  console.log(user.value);
   await UserServices.loginUser(user)
     .then((data) => {
       window.localStorage.setItem("user", JSON.stringify(data.data));
-      snackbar.value = true;
-      snackbar.color = "green";
-      snackbar.text = "Login successful!";
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = "Login successful!";
       router.push({ name: "recipes" });
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
 }
 
@@ -66,7 +67,7 @@ function closeCreateAccount() {
 }
 
 function closeSnackBar() {
-  snackbar.value = false;
+  snackbar.value.value = false;
 }
 </script>
 

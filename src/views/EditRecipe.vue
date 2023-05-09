@@ -1,11 +1,10 @@
 <script setup>
-import { onMounted, reactive, ref } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import IngredientServices from "../services/IngredientServices.js";
 import RecipeIngredientServices from "../services/RecipeIngredientServices";
 import RecipeStepServices from "../services/RecipeStepServices";
 import RecipeServices from "../services/RecipeServices";
-import StepComponent from "../components/StepComponent.vue";
 
 const route = useRoute();
 
@@ -18,19 +17,19 @@ const isAddIngredient = ref(false);
 const isEditIngredient = ref(false);
 const isAddStep = ref(false);
 const isEditStep = ref(false);
-const snackbar = reactive({
+const snackbar = ref({
   value: false,
   color: "",
   text: "",
 });
-const newStep = reactive({
+const newStep = ref({
   id: undefined,
   stepNumber: undefined,
   instruction: undefined,
   recipeId: undefined,
   recipeIngredient: [],
 });
-const newIngredient = reactive({
+const newIngredient = ref({
   id: undefined,
   quantity: undefined,
   recipeId: undefined,
@@ -56,17 +55,17 @@ async function getRecipe() {
 }
 
 async function updateRecipe() {
-  await RecipeServices.updateRecipe(recipe.value)
+  await RecipeServices.updateRecipe(recipe.value.id, recipe.value)
     .then(() => {
-      snackbar.value = true;
-      snackbar.color = "green";
-      snackbar.text = `${recipe.value.name} updated successfully!`;
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = `${recipe.value.name} updated successfully!`;
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
   await getRecipe();
 }
@@ -78,9 +77,9 @@ async function getIngredients() {
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
 }
 
@@ -96,40 +95,40 @@ async function getRecipeIngredients() {
 
 async function addIngredient() {
   isAddIngredient.value = false;
-  newIngredient.recipeId = recipe.value.id;
-  newIngredient.ingredientId = selectedIngredient.value.id;
-  delete newIngredient.id;
-  await RecipeIngredientServices.addRecipeIngredient(newIngredient)
+  newIngredient.value.recipeId = recipe.value.id;
+  newIngredient.value.ingredientId = selectedIngredient.value.id;
+  delete newIngredient.value.id;
+  await RecipeIngredientServices.addRecipeIngredient(newIngredient.value)
     .then(() => {
-      snackbar.value = true;
-      snackbar.color = "green";
-      snackbar.text = `Ingredient added successfully!`;
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = `Ingredient added successfully!`;
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
   await getRecipeIngredients();
 }
 
 async function updateIngredient() {
   isEditIngredient.value = false;
-  newIngredient.recipeId = recipe.value.id;
-  newIngredient.ingredientId = selectedIngredient.value.id;
+  newIngredient.value.recipeId = recipe.value.id;
+  newIngredient.value.ingredientId = selectedIngredient.value.id;
 
-  await RecipeIngredientServices.updateRecipeIngredient(newIngredient)
+  await RecipeIngredientServices.updateRecipeIngredient(newIngredient.value)
     .then(() => {
-      snackbar.value = true;
-      snackbar.color = "green";
-      snackbar.text = `${selectedIngredient.value.name} updated successfully!`;
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = `${selectedIngredient.value.name} updated successfully!`;
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
   await getRecipeIngredients();
 }
@@ -137,26 +136,27 @@ async function updateIngredient() {
 async function deleteIngredient(ingredient) {
   await RecipeIngredientServices.deleteRecipeIngredient(ingredient)
     .then(() => {
-      snackbar.value = true;
-      snackbar.color = "green";
-      snackbar.text = `${ingredient.ingredient.name} deleted successfully!`;
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = `${ingredient.ingredient.name} deleted successfully!`;
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
   await getRecipeIngredients();
 }
 
 async function checkUpdateIngredient() {
-  if (newStep.recipeIngredient.length > 0) {
-    for (let i = 0; i < newStep.recipeIngredient.length; i++) {
-      newIngredient.id = newStep.recipeIngredient[i].id;
-      newIngredient.quantity = newStep.recipeIngredient[i].quantity;
-      newIngredient.recipeStepId = newStep.id;
-      selectedIngredient.value.id = newStep.recipeIngredient[i].ingredientId;
+  if (newStep.value.recipeIngredient.length > 0) {
+    for (let i = 0; i < newStep.value.recipeIngredient.length; i++) {
+      newIngredient.value.id = newStep.value.recipeIngredient[i].id;
+      newIngredient.value.quantity = newStep.value.recipeIngredient[i].quantity;
+      newIngredient.value.recipeStepId = newStep.value.id;
+      selectedIngredient.value.id =
+        newStep.value.recipeIngredient[i].ingredientId;
       await updateIngredient();
     }
   }
@@ -176,19 +176,19 @@ async function getRecipeSteps() {
 
 async function addStep() {
   isAddStep.value = false;
-  newStep.recipeId = recipe.value.id;
-  delete newStep.id;
-  await RecipeStepServices.addRecipeStep(newStep)
+  newStep.value.recipeId = recipe.value.id;
+  delete newStep.value.id;
+  await RecipeStepServices.addRecipeStep(newStep.value)
     .then(() => {
-      snackbar.value = true;
-      snackbar.color = "green";
-      snackbar.text = `Step added successfully!`;
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = `Step added successfully!`;
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
 
   await checkUpdateIngredient();
@@ -198,17 +198,17 @@ async function addStep() {
 
 async function updateStep() {
   isEditStep.value = false;
-  await RecipeStepServices.updateRecipeStep(newStep)
+  await RecipeStepServices.updateRecipeStep(newStep.value)
     .then(() => {
-      snackbar.value = true;
-      snackbar.color = "green";
-      snackbar.text = `Step updated successfully!`;
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = `Step updated successfully!`;
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
 
   await checkUpdateIngredient();
@@ -219,51 +219,51 @@ async function updateStep() {
 async function deleteStep(step) {
   await RecipeStepServices.deleteRecipeStep(step)
     .then(() => {
-      snackbar.value = true;
-      snackbar.color = "green";
-      snackbar.text = `Step deleted successfully!`;
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = `Step deleted successfully!`;
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
 
   await getRecipeSteps();
 }
 
 function openAddIngredient() {
-  newIngredient.id = undefined;
-  newIngredient.quantity = undefined;
-  newIngredient.recipeStepId = undefined;
-  newIngredient.ingredientId = undefined;
+  newIngredient.value.id = undefined;
+  newIngredient.value.quantity = undefined;
+  newIngredient.value.recipeStepId = undefined;
+  newIngredient.value.ingredientId = undefined;
   selectedIngredient.value = undefined;
   isAddIngredient.value = true;
 }
 
 function openEditIngredient(ingredient) {
-  newIngredient.id = ingredient.id;
-  newIngredient.quantity = ingredient.quantity;
-  newIngredient.recipeStepId = ingredient.recipeStepId;
-  newIngredient.ingredientId = ingredient.ingredientId;
+  newIngredient.value.id = ingredient.id;
+  newIngredient.value.quantity = ingredient.quantity;
+  newIngredient.value.recipeStepId = ingredient.recipeStepId;
+  newIngredient.value.ingredientId = ingredient.ingredientId;
   selectedIngredient.value = ingredient.ingredient;
   isEditIngredient.value = true;
 }
 
 function openAddStep() {
-  newStep.id = undefined;
-  newStep.stepNumber = undefined;
-  newStep.instruction = undefined;
-  newStep.recipeIngredient = [];
+  newStep.value.id = undefined;
+  newStep.value.stepNumber = undefined;
+  newStep.value.instruction = undefined;
+  newStep.value.recipeIngredient = [];
   isAddStep.value = true;
 }
 
 function openEditStep(step) {
-  newStep.id = step.id;
-  newStep.stepNumber = step.stepNumber;
-  newStep.instruction = step.instruction;
-  newStep.recipeIngredient = step.recipeIngredient;
+  newStep.value.id = step.id;
+  newStep.value.stepNumber = step.stepNumber;
+  newStep.value.instruction = step.instruction;
+  newStep.value.recipeIngredient = step.recipeIngredient;
   isEditStep.value = true;
 }
 
@@ -284,7 +284,7 @@ function closeEditStep() {
 }
 
 function closeSnackBar() {
-  snackbar.value = false;
+  snackbar.value.value = false;
 }
 </script>
 
