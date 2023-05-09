@@ -18,7 +18,20 @@ const user = ref({
   password: "",
 });
 
-onMounted(async () => {});
+onMounted(async () => {
+  if (localStorage.getItem("user") !== null) {
+    await UserServices.logoutUser()
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    localStorage.removeItem("user");
+    user.value = null;
+    window.location.href = "/";
+  }
+});
 
 function navigateToRecipes() {
   router.push({ name: "recipes" });

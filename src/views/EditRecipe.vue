@@ -298,29 +298,35 @@ function closeSnackBar() {
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="5">
+      <v-col>
         <v-card class="rounded-lg elevation-5">
           <v-card-text>
-            <v-text-field
-              v-model="recipe.name"
-              label="Name"
-              required
-            ></v-text-field>
-
-            <v-textarea
-              v-model="recipe.description"
-              label="Description"
-            ></v-textarea>
-            <v-text-field
-              v-model.number="recipe.servings"
-              label="Number of Servings"
-              type="number"
-            ></v-text-field>
-            <v-text-field
-              v-model.number="recipe.time"
-              label="Time to Make (in minutes)"
-              type="number"
-            ></v-text-field>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  v-model="recipe.name"
+                  label="Name"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  v-model.number="recipe.servings"
+                  label="Number of Servings"
+                  type="number"
+                ></v-text-field>
+                <v-text-field
+                  v-model.number="recipe.time"
+                  label="Time to Make (in minutes)"
+                  type="number"
+                ></v-text-field>
+              </v-col>
+              <v-col>
+                <v-textarea
+                  v-model="recipe.description"
+                  rows="8"
+                  label="Description"
+                ></v-textarea>
+              </v-col>
+            </v-row>
           </v-card-text>
           <v-card-actions class="pt-0">
             <v-spacer></v-spacer>
@@ -331,6 +337,8 @@ function closeSnackBar() {
           </v-card-actions>
         </v-card>
       </v-col>
+    </v-row>
+    <v-row>
       <v-col>
         <v-card class="rounded-lg elevation-5">
           <v-card-title
@@ -422,23 +430,8 @@ function closeSnackBar() {
                 </tr>
               </tbody>
             </v-table>
-            <!-- <v-list>
-              <v-list-item v-for="step in recipeSteps" :key="step.id">
-                <b>
-                  {{ step.stepNumber }}
-                </b>
-                {{ step.instruction }}
-              </v-list-item>
-            </v-list> -->
-            <!-- <StepComponent
-              v-for="step in recipeSteps"
-              :recipeStep="step"
-              @updateStep="openEditStep(step)"
-              @deleteStep="deleteStep(step)"
-            ></StepComponent> -->
-          </v-card-text>
-        </v-card></v-col
-      >
+          </v-card-text> </v-card
+      ></v-col>
     </v-row>
 
     <v-dialog
