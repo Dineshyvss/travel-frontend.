@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from "vue";
-import { ref } from "vue";
+import { ref, toRaw } from "vue";
 import { useRouter } from "vue-router";
 import UserServices from "../services/UserServices.js";
 
@@ -41,7 +41,8 @@ async function createAccount() {
 }
 
 async function login() {
-  await UserServices.loginUser(user.value)
+  console.log(user.value);
+  await UserServices.loginUser(user)
     .then((data) => {
       window.localStorage.setItem("user", JSON.stringify(data.data));
       snackbar.value.value = true;

@@ -53,10 +53,11 @@ async function getRecipes() {
 
 async function addRecipe() {
   isAdd.value = false;
-  await RecipeServices.addRecipe(newRecipe)
+  newRecipe.value.userId = user.value.id;
+  await RecipeServices.addRecipe(newRecipe.value)
     .then(() => {
       snackbar.value.value = true;
-      snackbar.value.value.color = "green";
+      snackbar.value.color = "green";
       snackbar.value.text = `${newRecipe.name} added successfully!`;
     })
     .catch((error) => {

@@ -55,7 +55,7 @@ async function getRecipe() {
 }
 
 async function updateRecipe() {
-  await RecipeServices.updateRecipe(recipe.value)
+  await RecipeServices.updateRecipe(recipe.value.id, recipe.value)
     .then(() => {
       snackbar.value.value = true;
       snackbar.value.color = "green";
@@ -120,9 +120,9 @@ async function updateIngredient() {
 
   await RecipeIngredientServices.updateRecipeIngredient(newIngredient.value)
     .then(() => {
-      snackbar.value.value.value = true;
-      snackbar.value.value.color = "green";
-      snackbar.value.value.text = `${selectedIngredient.value.name} updated successfully!`;
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = `${selectedIngredient.value.name} updated successfully!`;
     })
     .catch((error) => {
       console.log(error);
@@ -134,7 +134,7 @@ async function updateIngredient() {
 }
 
 async function deleteIngredient(ingredient) {
-  await RecipeIngredientServices.deleteRecipeIngredient(ingredient.value)
+  await RecipeIngredientServices.deleteRecipeIngredient(ingredient)
     .then(() => {
       snackbar.value.value = true;
       snackbar.value.color = "green";
@@ -151,7 +151,7 @@ async function deleteIngredient(ingredient) {
 
 async function checkUpdateIngredient() {
   if (newStep.value.recipeIngredient.length > 0) {
-    for (let i = 0; i < newStep.recipeIngredient.length; i++) {
+    for (let i = 0; i < newStep.value.recipeIngredient.length; i++) {
       newIngredient.value.id = newStep.value.recipeIngredient[i].id;
       newIngredient.value.quantity = newStep.value.recipeIngredient[i].quantity;
       newIngredient.value.recipeStepId = newStep.value.id;
@@ -217,7 +217,7 @@ async function updateStep() {
 }
 
 async function deleteStep(step) {
-  await RecipeStepServices.deleteRecipeStep(step.value)
+  await RecipeStepServices.deleteRecipeStep(step)
     .then(() => {
       snackbar.value.value = true;
       snackbar.value.color = "green";
@@ -243,11 +243,11 @@ function openAddIngredient() {
 }
 
 function openEditIngredient(ingredient) {
-  newIngredient.value.id = ingredient.value.id;
-  newIngredient.value.quantity = ingredient.value.quantity;
-  newIngredient.value.recipeStepId = ingredient.value.recipeStepId;
-  newIngredient.value.ingredientId = ingredient.value.ingredientId;
-  selectedIngredient.value = ingredient.value.ingredient;
+  newIngredient.value.id = ingredient.id;
+  newIngredient.value.quantity = ingredient.quantity;
+  newIngredient.value.recipeStepId = ingredient.recipeStepId;
+  newIngredient.value.ingredientId = ingredient.ingredientId;
+  selectedIngredient.value = ingredient.ingredient;
   isEditIngredient.value = true;
 }
 
@@ -261,7 +261,7 @@ function openAddStep() {
 
 function openEditStep(step) {
   newStep.value.id = step.id;
-  newStep.valuestepNumber = step.stepNumber;
+  newStep.value.stepNumber = step.stepNumber;
   newStep.value.instruction = step.instruction;
   newStep.value.recipeIngredient = step.recipeIngredient;
   isEditStep.value = true;

@@ -12,6 +12,7 @@ const units = [
   "milliliter",
   "ounce",
   "pint",
+  "peice",
   "pound",
   "quart",
   "tablespoon",
@@ -56,11 +57,11 @@ async function getIngredients() {
 async function addIngredient() {
   isAdd.value = false;
   delete newIngredient.id;
-  await IngredientServices.addIngredient(newIngredient)
+  await IngredientServices.addIngredient(newIngredient.value)
     .then(() => {
       snackbar.value.value = true;
       snackbar.value.color = "green";
-      snackbar.value.text = `${newIngredient.name} added successfully!`;
+      snackbar.value.text = `${newIngredient.value.name} added successfully!`;
     })
     .catch((error) => {
       console.log(error);
@@ -73,7 +74,7 @@ async function addIngredient() {
 
 async function updateIngredient() {
   isEdit.value = false;
-  await IngredientServices.updateIngredient(newIngredient)
+  await IngredientServices.updateIngredient(newIngredient.value)
     .then(() => {
       snackbar.value.value = true;
       snackbar.value.color = "green";
@@ -100,10 +101,10 @@ function closeAdd() {
 }
 
 function openEdit(item) {
-  newIngredient.value.id = item.value.id;
-  newIngredient.value.name = item.value.name;
-  newIngredient.value.unit = item.value.unit;
-  newIngredient.value.pricePerUnit = item.value.pricePerUnit;
+  newIngredient.value.id = item.id;
+  newIngredient.value.name = item.name;
+  newIngredient.value.unit = item.unit;
+  newIngredient.value.pricePerUnit = item.pricePerUnit;
   isEdit.value = true;
 }
 
