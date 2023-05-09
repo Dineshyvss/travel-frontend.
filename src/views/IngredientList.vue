@@ -12,7 +12,7 @@ const units = [
   "milliliter",
   "ounce",
   "pint",
-  "peice",
+  "piece",
   "pound",
   "quart",
   "tablespoon",
