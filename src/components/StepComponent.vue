@@ -8,9 +8,7 @@ const props = defineProps({
   },
 });
 
-onMounted(() => {
-  console.log(props.recipeStep);
-});
+onMounted(() => {});
 
 const emit = defineEmits(["updateStep", "deleteStep"]);
 

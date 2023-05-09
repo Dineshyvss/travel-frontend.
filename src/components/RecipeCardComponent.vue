@@ -29,7 +29,6 @@ async function getRecipeIngredients() {
     .catch((error) => {
       console.log(error);
     });
-  console.log(recipeIngredients);
 }
 
 async function getRecipeSteps() {

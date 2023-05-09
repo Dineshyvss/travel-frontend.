@@ -4,6 +4,9 @@ export default {
   getRecipes() {
     return apiClient.get("recipes");
   },
+  getRecipesByUserId(userId) {
+    return apiClient.get("recipes/user/" + userId);
+  },
   getRecipe(id) {
     return apiClient.get("recipes/" + id);
   },

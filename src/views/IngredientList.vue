@@ -22,6 +22,7 @@ const units = [
 const ingredients = ref([]);
 const isAdd = ref(false);
 const isEdit = ref(false);
+const user = ref(null);
 const snackbar = reactive({
   value: false,
   color: "",
@@ -36,6 +37,7 @@ const newIngredient = reactive({
 
 onMounted(async () => {
   await getIngredients();
+  user.value = JSON.parse(localStorage.getItem("user"));
 });
 
 async function getIngredients() {
@@ -124,7 +126,9 @@ function closeSnackBar() {
           </v-card-title>
         </v-col>
         <v-col class="d-flex justify-end" cols="2">
-          <v-btn color="accent" @click="openAdd()">Add</v-btn>
+          <v-btn v-if="user !== null" color="accent" @click="openAdd()"
+            >Add</v-btn
+          >
         </v-col>
       </v-row>
 

@@ -8,17 +8,18 @@ export default {
     return apiClient.post("users", user);
   },
   loginUser(user) {
-    return apiClient.post("users/login", user, {
+    console.log(user);
+    return apiClient.post("login", user, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         "X-Requested-With": "XMLHttpRequest",
         crossDomain: true,
-        Authorization: "Basic " + btoa(user.username + ":" + user.password),
+        Authorization: "Basic " + btoa(user.email + ":" + user.password),
       },
     });
   },
   logoutUser() {
-    return apiClient.post("users/logout");
+    return apiClient.post("logout");
   },
 };

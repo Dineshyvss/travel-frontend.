@@ -6,6 +6,7 @@ import RecipeServices from "../services/RecipeServices.js";
 
 const recipes = ref([]);
 const isAdd = ref(false);
+const user = ref(null);
 const snackbar = reactive({
   value: false,
   color: "",
@@ -20,24 +21,37 @@ const newRecipe = reactive({
 
 onMounted(async () => {
   await getRecipes();
+  user.value = JSON.parse(localStorage.getItem("user"));
 });
 
 async function getRecipes() {
-  await RecipeServices.getRecipes()
-    .then((response) => {
-      recipes.value = response.data;
-      console.log(recipes);
-    })
-    .catch((error) => {
-      console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
-    });
+  user.value = JSON.parse(localStorage.getItem("user"));
+  if (user.value !== null && user.value.id !== null) {
+    await RecipeServices.getRecipesByUserId(user.value.id)
+      .then((response) => {
+        recipes.value = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        snackbar.value = true;
+        snackbar.color = "error";
+        snackbar.text = error.response.data.message;
+      });
+  } else {
+    await RecipeServices.getRecipes()
+      .then((response) => {
+        recipes.value = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        snackbar.value = true;
+        snackbar.color = "error";
+        snackbar.text = error.response.data.message;
+      });
+  }
 }
 
 async function addRecipe() {
-  console.log(newRecipe.name);
   isAdd.value = false;
   await RecipeServices.addRecipe(newRecipe)
     .then(() => {
@@ -77,7 +91,9 @@ function closeSnackBar() {
           </v-card-title>
         </v-col>
         <v-col class="d-flex justify-end" cols="2">
-          <v-btn color="accent" @click="openAdd()">Add</v-btn>
+          <v-btn v-if="user !== null" color="accent" @click="openAdd()"
+            >Add</v-btn
+          >
         </v-col>
       </v-row>
 
@@ -90,9 +106,7 @@ function closeSnackBar() {
 
       <v-dialog persistent v-model="isAdd" width="800">
         <v-card class="rounded-lg elevation-5">
-          <v-card-item>
-            <v-card-title class="headline mb-2">Add Recipe </v-card-title>
-          </v-card-item>
+          <v-card-title class="headline mb-2">Add Recipe </v-card-title>
           <v-card-text>
             <v-text-field
               v-model="newRecipe.name"

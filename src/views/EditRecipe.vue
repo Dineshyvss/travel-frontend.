@@ -53,7 +53,6 @@ async function getRecipe() {
     .catch((error) => {
       console.log(error);
     });
-  console.log(recipe);
 }
 
 async function updateRecipe() {
@@ -83,7 +82,6 @@ async function getIngredients() {
       snackbar.color = "error";
       snackbar.text = error.response.data.message;
     });
-  console.log(ingredients);
 }
 
 async function getRecipeIngredients() {
@@ -94,7 +92,6 @@ async function getRecipeIngredients() {
     .catch((error) => {
       console.log(error);
     });
-  console.log(recipeIngredients);
 }
 
 async function addIngredient() {
@@ -175,7 +172,6 @@ async function getRecipeSteps() {
     .catch((error) => {
       console.log(error);
     });
-  console.log(recipeSteps);
 }
 
 async function addStep() {
