@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from "vue";
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import IngredientServices from "../services/IngredientServices.js";
 
 const units = [
@@ -23,12 +23,12 @@ const ingredients = ref([]);
 const isAdd = ref(false);
 const isEdit = ref(false);
 const user = ref(null);
-const snackbar = reactive({
+const snackbar = ref({
   value: false,
   color: "",
   text: "",
 });
-const newIngredient = reactive({
+const newIngredient = ref({
   id: undefined,
   name: undefined,
   unit: undefined,
@@ -47,9 +47,9 @@ async function getIngredients() {
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
 }
 
@@ -58,15 +58,15 @@ async function addIngredient() {
   delete newIngredient.id;
   await IngredientServices.addIngredient(newIngredient)
     .then(() => {
-      snackbar.value = true;
-      snackbar.color = "green";
-      snackbar.text = `${newIngredient.name} added successfully!`;
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = `${newIngredient.name} added successfully!`;
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
   await getIngredients();
 }
@@ -75,23 +75,23 @@ async function updateIngredient() {
   isEdit.value = false;
   await IngredientServices.updateIngredient(newIngredient)
     .then(() => {
-      snackbar.value = true;
-      snackbar.color = "green";
-      snackbar.text = `${newIngredient.name} updated successfully!`;
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = `${newIngredient.name} updated successfully!`;
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
   await getIngredients();
 }
 
 function openAdd() {
-  newIngredient.name = undefined;
-  newIngredient.unit = undefined;
-  newIngredient.pricePerUnit = undefined;
+  newIngredient.value.name = undefined;
+  newIngredient.value.unit = undefined;
+  newIngredient.value.pricePerUnit = undefined;
   isAdd.value = true;
 }
 
@@ -100,10 +100,10 @@ function closeAdd() {
 }
 
 function openEdit(item) {
-  newIngredient.id = item.id;
-  newIngredient.name = item.name;
-  newIngredient.unit = item.unit;
-  newIngredient.pricePerUnit = item.pricePerUnit;
+  newIngredient.value.id = item.value.id;
+  newIngredient.value.name = item.value.name;
+  newIngredient.value.unit = item.value.unit;
+  newIngredient.value.pricePerUnit = item.value.pricePerUnit;
   isEdit.value = true;
 }
 
@@ -112,7 +112,7 @@ function closeEdit() {
 }
 
 function closeSnackBar() {
-  snackbar.value = false;
+  snackbar.value.value = false;
 }
 </script>
 

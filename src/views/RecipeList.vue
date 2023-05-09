@@ -1,18 +1,18 @@
 <script setup>
 import { onMounted } from "vue";
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import RecipeCard from "../components/RecipeCardComponent.vue";
 import RecipeServices from "../services/RecipeServices.js";
 
 const recipes = ref([]);
 const isAdd = ref(false);
 const user = ref(null);
-const snackbar = reactive({
+const snackbar = ref({
   value: false,
   color: "",
   text: "",
 });
-const newRecipe = reactive({
+const newRecipe = ref({
   name: "",
   description: "",
   servings: 0,
@@ -33,9 +33,9 @@ async function getRecipes() {
       })
       .catch((error) => {
         console.log(error);
-        snackbar.value = true;
-        snackbar.color = "error";
-        snackbar.text = error.response.data.message;
+        snackbar.value.value = true;
+        snackbar.value.color = "error";
+        snackbar.value.text = error.response.data.message;
       });
   } else {
     await RecipeServices.getRecipes()
@@ -44,9 +44,9 @@ async function getRecipes() {
       })
       .catch((error) => {
         console.log(error);
-        snackbar.value = true;
-        snackbar.color = "error";
-        snackbar.text = error.response.data.message;
+        snackbar.value.value = true;
+        snackbar.value.color = "error";
+        snackbar.value.text = error.response.data.message;
       });
   }
 }
@@ -55,15 +55,15 @@ async function addRecipe() {
   isAdd.value = false;
   await RecipeServices.addRecipe(newRecipe)
     .then(() => {
-      snackbar.value = true;
-      snackbar.color = "green";
-      snackbar.text = `${newRecipe.name} added successfully!`;
+      snackbar.value.value = true;
+      snackbar.value.value.color = "green";
+      snackbar.value.text = `${newRecipe.name} added successfully!`;
     })
     .catch((error) => {
       console.log(error);
-      snackbar.value = true;
-      snackbar.color = "error";
-      snackbar.text = error.response.data.message;
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
     });
   await getRecipes();
 }
@@ -77,7 +77,7 @@ function closeAdd() {
 }
 
 function closeSnackBar() {
-  snackbar.value = false;
+  snackbar.value.value = false;
 }
 </script>
 

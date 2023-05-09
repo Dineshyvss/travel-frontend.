@@ -1,6 +1,5 @@
 <script setup>
-import { reactive, ref, defineProps, defineEmits, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { onMounted } from "vue";
 
 const props = defineProps({
   recipeStep: {
