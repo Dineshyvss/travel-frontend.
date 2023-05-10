@@ -17,6 +17,7 @@ const newRecipe = ref({
   description: "",
   servings: 0,
   time: "30",
+  isPublished: false,
 });
 
 onMounted(async () => {
@@ -58,7 +59,7 @@ async function addRecipe() {
     .then(() => {
       snackbar.value.value = true;
       snackbar.value.color = "green";
-      snackbar.value.text = `${newRecipe.name} added successfully!`;
+      snackbar.value.text = `${newRecipe.value.name} added successfully!`;
     })
     .catch((error) => {
       console.log(error);
@@ -115,10 +116,6 @@ function closeSnackBar() {
               required
             ></v-text-field>
 
-            <v-textarea
-              v-model="newRecipe.description"
-              label="Description"
-            ></v-textarea>
             <v-text-field
               v-model.number="newRecipe.servings"
               label="Number of Servings"
@@ -129,6 +126,17 @@ function closeSnackBar() {
               label="Time to Make (in minutes)"
               type="number"
             ></v-text-field>
+
+            <v-textarea
+              v-model="newRecipe.description"
+              label="Description"
+            ></v-textarea>
+            <v-switch
+              v-model="newRecipe.isPublished"
+              hide-details
+              inset
+              :label="`Publish? ${newRecipe.isPublished ? 'Yes' : 'No'}`"
+            ></v-switch>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>

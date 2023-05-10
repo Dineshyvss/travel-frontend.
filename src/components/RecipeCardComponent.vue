@@ -9,6 +9,7 @@ const router = useRouter();
 const showDetails = ref(false);
 const recipeIngredients = ref([]);
 const recipeSteps = ref([]);
+const user = ref(null);
 
 const props = defineProps({
   recipe: {
@@ -19,6 +20,7 @@ const props = defineProps({
 onMounted(async () => {
   await getRecipeIngredients();
   await getRecipeSteps();
+  user.value = JSON.parse(localStorage.getItem("user"));
 });
 
 async function getRecipeIngredients() {
@@ -68,6 +70,7 @@ function navigateToEdit() {
         </v-col>
         <v-col class="d-flex justify-end">
           <v-icon
+            v-if="user !== null"
             size="small"
             icon="mdi-pencil"
             @click="navigateToEdit()"
@@ -80,9 +83,8 @@ function navigateToEdit() {
     </v-card-text>
     <v-expand-transition>
       <v-card-text class="pt-0" v-show="showDetails">
-        Ingredients
+        <h3>Ingredients</h3>
         <v-list>
-          <v-divider></v-divider>
           <v-list-item
             v-for="recipeIngredient in recipeIngredients"
             :key="recipeIngredient.id"
@@ -100,8 +102,7 @@ function navigateToEdit() {
             }}/{{ recipeIngredient.ingredient.unit }})
           </v-list-item>
         </v-list>
-        Recipe Steps
-
+        <h3>Recipe Steps</h3>
         <v-table>
           <thead>
             <tr>

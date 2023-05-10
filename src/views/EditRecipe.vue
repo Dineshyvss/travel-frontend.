@@ -318,18 +318,23 @@ function closeSnackBar() {
                   label="Time to Make (in minutes)"
                   type="number"
                 ></v-text-field>
+                <v-switch
+                  v-model="recipe.isPublished"
+                  hide-details
+                  inset
+                  :label="`Publish? ${recipe.isPublished ? 'Yes' : 'No'}`"
+                ></v-switch>
               </v-col>
               <v-col>
                 <v-textarea
                   v-model="recipe.description"
-                  rows="8"
+                  rows="10"
                   label="Description"
                 ></v-textarea>
               </v-col>
             </v-row>
           </v-card-text>
           <v-card-actions class="pt-0">
-            <v-spacer></v-spacer>
             <v-btn variant="flat" color="primary" @click="updateRecipe()"
               >Update Recipe</v-btn
             >
@@ -369,16 +374,20 @@ function closeSnackBar() {
                   recipeIngredient.ingredient.pricePerUnit
                 }}/{{ recipeIngredient.ingredient.unit }})
                 <template v-slot:append>
-                  <v-icon
-                    size="x-small"
-                    icon="mdi-pencil"
-                    @click="openEditIngredient(recipeIngredient)"
-                  ></v-icon>
-                  <v-icon
-                    size="x-small"
-                    icon="mdi-trash-can"
-                    @click="deleteIngredient(recipeIngredient)"
-                  ></v-icon>
+                  <v-row>
+                    <v-icon
+                      class="mx-2"
+                      size="x-small"
+                      icon="mdi-pencil"
+                      @click="openEditIngredient(recipeIngredient)"
+                    ></v-icon>
+                    <v-icon
+                      class="mx-2"
+                      size="x-small"
+                      icon="mdi-trash-can"
+                      @click="deleteIngredient(recipeIngredient)"
+                    ></v-icon>
+                  </v-row>
                 </template>
               </v-list-item>
             </v-list>
@@ -416,12 +425,14 @@ function closeSnackBar() {
                   </td>
                   <td>
                     <v-icon
-                      size="small"
+                      size="x-small"
                       icon="mdi-pencil"
                       @click="openEditStep(step)"
                     ></v-icon>
+                  </td>
+                  <td>
                     <v-icon
-                      size="small"
+                      size="x-small"
                       icon="mdi-trash-can"
                       @click="deleteStep(step)"
                     >

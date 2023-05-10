@@ -20,16 +20,7 @@ const user = ref({
 
 onMounted(async () => {
   if (localStorage.getItem("user") !== null) {
-    await UserServices.logoutUser()
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    localStorage.removeItem("user");
-    user.value = null;
-    window.location.href = "/";
+    router.push({ name: "recipes" });
   }
 });
 
@@ -113,15 +104,14 @@ function closeSnackBar() {
       </v-card>
 
       <v-card class="rounded-lg elevation-5 my-8">
-        <v-card-title class="text-center headline"
-          >View Public Recipes
+        <v-card-title class="text-center headline">
           <v-btn
             class="ml-2"
             variant="flat"
             color="secondary"
             @click="navigateToRecipes()"
           >
-            Here
+            View Published Recipes
           </v-btn>
         </v-card-title>
       </v-card>

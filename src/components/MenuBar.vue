@@ -1,7 +1,10 @@
 <script setup>
 import ocLogo from "/oc_logo.png";
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import UserServices from "../services/UserServices";
+
+const router = useRouter();
 
 const user = ref(null);
 const title = ref("Recipes");
@@ -12,8 +15,8 @@ onMounted(() => {
   user.value = JSON.parse(localStorage.getItem("user"));
 });
 
-async function logout() {
-  await UserServices.logoutUser()
+function logout() {
+  UserServices.logoutUser()
     .then((data) => {
       console.log(data);
     })
@@ -22,7 +25,7 @@ async function logout() {
     });
   localStorage.removeItem("user");
   user.value = null;
-  window.location.href = "/";
+  router.push({ name: "login" });
 }
 </script>
 
