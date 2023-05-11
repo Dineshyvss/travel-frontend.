@@ -117,6 +117,7 @@ async function updateIngredient() {
   isEditIngredient.value = false;
   newIngredient.value.recipeId = recipe.value.id;
   newIngredient.value.ingredientId = selectedIngredient.value.id;
+  console.log(newIngredient);
 
   await RecipeIngredientServices.updateRecipeIngredient(newIngredient.value)
     .then(() => {
@@ -151,6 +152,7 @@ async function deleteIngredient(ingredient) {
 
 async function checkUpdateIngredient() {
   if (newStep.value.recipeIngredient.length > 0) {
+    console.log(newStep.value.recipeIngredient);
     for (let i = 0; i < newStep.value.recipeIngredient.length; i++) {
       newIngredient.value.id = newStep.value.recipeIngredient[i].id;
       newIngredient.value.quantity = newStep.value.recipeIngredient[i].quantity;
@@ -179,7 +181,8 @@ async function addStep() {
   newStep.value.recipeId = recipe.value.id;
   delete newStep.value.id;
   await RecipeStepServices.addRecipeStep(newStep.value)
-    .then(() => {
+    .then((data) => {
+      newStep.value.id = data.data.id;
       snackbar.value.value = true;
       snackbar.value.color = "green";
       snackbar.value.text = `Step added successfully!`;
