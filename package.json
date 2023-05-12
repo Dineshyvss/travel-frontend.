@@ -2,13 +2,14 @@
   "name": "recipe-frontend",
   "version": "0.0.0",
   "scripts": {
-    "dev": "APP_ENV=development vite",
-    "build": "APP_ENV=production vite build",
-    "preview": "vite preview"
+    "dev": "cross-env APP_ENV=development vite",
+    "build": "cross-env APP_ENV=production vite build",
+    "preview": "cross-env vite preview"
   },
   "dependencies": {
     "@mdi/font": "^7.0.96",
     "axios": "^1.1.3",
+    "cross-env": "^7.0.3",
     "eslint": "^8.28.0",
     "eslint-plugin-vue": "^9.7.0",
     "roboto-fontface": "*",
