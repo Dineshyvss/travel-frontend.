@@ -1,108 +1,177 @@
-<template>
-  <div id="body">
-    <h1>Login</h1>
-    <br />
-    <p class="text-error">{{ message }}</p>
+<script setup>
+import { onMounted } from "vue";
+import { ref, toRaw } from "vue";
+import { useRouter } from "vue-router";
+import UserServices from "../services/UserServices.js";
 
-    <div class="form">
-      <div class="form-group">
-        <label for="username"> Username </label>
-        <input v-model="user.username" type="text" id="username" />
-      </div>
+const router = useRouter();
+const isCreateAccount = ref(false);
+const snackbar = ref({
+  value: false,
+  color: "",
+  text: "",
+});
+const user = ref({
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+});
 
-      <div class="form-group">
-        <label for="password"> Password </label>
-        <input v-model="user.password" type="text" id="password" />
-      </div>
+onMounted(async () => {
+  if (localStorage.getItem("user") !== null) {
+    router.push({ name: "recipes" });
+  }
+});
 
-      <br />
-      <button class="success" name="Login" v-on:click.prevent="login()">
-        Login
-      </button>
-      <button @click="this.show = true">Create Account</button>
-    </div>
-    <div v-if="show" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <span @click="this.show = false" class="close">&times;</span>
-          <p>Create a To-Do List Account</p>
-        </div>
-        <br />
-        <div class="modal-body">
-          <p class="text-error">{{ message }}</p>
-          <div class="form" style="font-size: 1rem">
-            <div class="form-group">
-              <label for="fname"> First Name </label>
-              <input v-model="newUser.firstName" type="text" id="fname" />
-            </div>
+function navigateToRecipes() {
+  router.push({ name: "recipes" });
+}
 
-            <div class="form-group">
-              <label for="lname"> Last Name </label>
-              <input v-model="newUser.lastName" type="text" id="lname" />
-            </div>
-            <div class="form-group">
-              <label for="username"> Username </label>
-              <input v-model="newUser.username" type="text" id="username" />
-            </div>
+async function createAccount() {
+  await UserServices.addUser(user.value)
+    .then(() => {
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = "Account created successfully!";
+      router.push({ name: "login" });
+    })
+    .catch((error) => {
+      console.log(error);
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
+    });
+}
 
-            <div class="form-group">
-              <label for="password"> Password </label>
-              <input v-model="newUser.password" type="text" id="password" />
-            </div>
-            <br />
-            <button class="success" v-on:click="createAccount()">Create</button>
-            <button v-on:click="this.show = false">Cancel</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
+async function login() {
+  console.log(user.value);
+  await UserServices.loginUser(user)
+    .then((data) => {
+      window.localStorage.setItem("user", JSON.stringify(data.data));
+      snackbar.value.value = true;
+      snackbar.value.color = "green";
+      snackbar.value.text = "Login successful!";
+      router.push({ name: "recipes" });
+    })
+    .catch((error) => {
+      console.log(error);
+      snackbar.value.value = true;
+      snackbar.value.color = "error";
+      snackbar.value.text = error.response.data.message;
+    });
+}
 
-<script>
-import ListServices from "../services/ListServices.js";
+function openCreateAccount() {
+  isCreateAccount.value = true;
+}
 
-export default {
-  data() {
-    return {
-      show: false,
-      user: {
-        username: "",
-        password: "",
-      },
-      newUser: {
-        firstName: "",
-        lastName: "",
-        username: "",
-        password: "",
-      },
-      message: "",
-    };
-  },
-  methods: {
-    login() {
-      ListServices.loginUser(this.user)
-        .then((response) => {
-          localStorage.setItem("token", response.data.token);
-          this.$router.push({ name: "lists" });
-        })
-        .catch((error) => {
-          console.log(error);
-          this.message = error.response.data.message;
-        });
-    },
-    createAccount() {
-      ListServices.addUser(this.newUser)
-        .then(() => {
-          this.show = false;
-          this.message = "User successfully created. Please log in.";
-        })
-        .catch((error) => {
-          this.message = error.response.data.message;
-        });
-    },
-  },
-};
+function closeCreateAccount() {
+  isCreateAccount.value = false;
+}
+
+function closeSnackBar() {
+  snackbar.value.value = false;
+}
 </script>
 
-<style></style>
+<template>
+  <v-container>
+    <div id="body">
+      <v-card class="rounded-lg elevation-5">
+        <v-card-title class="headline mb-2">Login </v-card-title>
+        <v-card-text>
+          <v-text-field
+            v-model="user.email"
+            label="Email"
+            required
+          ></v-text-field>
+
+          <v-text-field
+            v-model="user.password"
+            label="Password"
+            required
+          ></v-text-field>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn variant="flat" color="secondary" @click="openCreateAccount()"
+            >Create Account</v-btn
+          >
+          <v-spacer></v-spacer>
+
+          <v-btn variant="flat" color="primary" @click="login()">Login</v-btn>
+        </v-card-actions>
+      </v-card>
+
+      <v-card class="rounded-lg elevation-5 my-8">
+        <v-card-title class="text-center headline">
+          <v-btn
+            class="ml-2"
+            variant="flat"
+            color="secondary"
+            @click="navigateToRecipes()"
+          >
+            View Published Recipes
+          </v-btn>
+        </v-card-title>
+      </v-card>
+
+      <v-dialog persistent v-model="isCreateAccount" width="800">
+        <v-card class="rounded-lg elevation-5">
+          <v-card-title class="headline mb-2">Create Account </v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="user.firstName"
+              label="First Name"
+              required
+            ></v-text-field>
+
+            <v-text-field
+              v-model="user.lastName"
+              label="Last Name"
+              required
+            ></v-text-field>
+
+            <v-text-field
+              v-model="user.email"
+              label="Email"
+              required
+            ></v-text-field>
+
+            <v-text-field
+              v-model="user.password"
+              label="Password"
+              required
+            ></v-text-field>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              variant="flat"
+              color="secondary"
+              @click="closeCreateAccount()"
+              >Close</v-btn
+            >
+            <v-btn variant="flat" color="primary" @click="createAccount()"
+              >Create Account</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-snackbar v-model="snackbar.value" rounded="pill">
+        {{ snackbar.text }}
+
+        <template v-slot:actions>
+          <v-btn
+            :color="snackbar.color"
+            variant="text"
+            @click="closeSnackBar()"
+          >
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
+    </div>
+  </v-container>
+</template>

@@ -1,33 +1,28 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import Login from "./views/Login.vue";
-import TodoList from "./views/TodoList.vue";
-import AddList from "./views/AddList.vue";
-import EditList from "./views/EditList.vue";
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
       name: "login",
-      component: Login,
+      component: () => import("./views/Login.vue"),
     },
     {
-      path: "/lists",
-      name: "lists",
-      component: TodoList,
+      path: "/recipes",
+      name: "recipes",
+      component: () => import("./views/RecipeList.vue"),
     },
     {
-      path: "/add",
-      name: "addList",
-      component: AddList,
-    },
-    {
-      path: "/edit/:id",
-      name: "editList",
-      component: EditList,
+      path: "/recipe/:id",
+      name: "editRecipe",
       props: true,
+      component: () => import("./views/EditRecipe.vue"),
+    },
+    {
+      path: "/ingredients",
+      name: "ingredients",
+      component: () => import("./views/IngredientList.vue"),
     },
   ],
 });
