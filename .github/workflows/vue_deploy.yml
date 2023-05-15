@@ -33,4 +33,4 @@ jobs:
           SOURCE: "dist/"
           REMOTE_HOST: "recipe.eaglesoftwareteam.com"
           REMOTE_USER: ubuntu
-          TARGET: "/var/www/html/recipe"
+          TARGET: "/var/www/html/recipe-frontend"
