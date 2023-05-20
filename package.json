@@ -1,0 +1,30 @@
+{
+  "name": "recipe-frontend",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "cross-env APP_ENV=development vite",
+    "build": "cross-env APP_ENV=production vite build",
+    "preview": "cross-env vite preview"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.0.96",
+    "axios": "^1.1.3",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.28.0",
+    "eslint-plugin-vue": "^9.7.0",
+    "roboto-fontface": "*",
+    "vue": "^3.2.41",
+    "vue-router": "^4.1.6",
+    "vuetify": "^3.2.3",
+    "vuex": "^4.0.2",
+    "webfontloader": "^1.6.28"
+  },
+  "devDependencies": {
+    "@mdi/js": "^7.0.96",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "vite": "^4.0.1",
+    "vite-plugin-vuetify": "^1.0.0-alpha.12",
+    "vue-cli-plugin-vuetify": "~2.5.8"
+  },
+  "type": "module"
+}
