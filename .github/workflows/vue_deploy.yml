@@ -1,0 +1,36 @@
+name: AWS DEPLOY TO STAGING
+
+#turn off deploy to AWS
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - dev
+
+jobs:
+  aws-deploy:
+    runs-on: ubuntu-latest
+    #For google auth
+
+    steps:
+      - uses: actions/checkout@v2
+        # may need to change to version 3
+        with:
+          ref: dev
+      - uses: actions/setup-node@v3
+        #May need to change to version 18
+        with:
+          node-version: 16
+
+      - run: npm install
+      - run: npm run build
+
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@v2.1.1
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "dist/"
+          REMOTE_HOST: "recipe.eaglesoftwareteam.com"
+          REMOTE_USER: ubuntu
+          TARGET: "/var/www/html/recipe-frontend"
