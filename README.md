@@ -1,4 +1,4 @@
-# Recipe Frontend with Vue 3
+# Travel Frontend with Vue 3
 
 This application allows users to create and maintain recipes. Please visit https://github.com/OC-ComputerScience/recipe-backend for the backend repository.
 
