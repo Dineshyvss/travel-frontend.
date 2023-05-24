@@ -296,7 +296,7 @@ function closeSnackBar() {
     <v-row align="center">
       <v-col cols="10"
         ><v-card-title class="pl-0 text-h4 font-weight-bold"
-          >Edit Recipe
+          >Edit Tour
         </v-card-title>
       </v-col>
     </v-row>
@@ -313,12 +313,12 @@ function closeSnackBar() {
                 ></v-text-field>
                 <v-text-field
                   v-model.number="recipe.servings"
-                  label="Number of Servings"
+                  label="Enter The price"
                   type="number"
                 ></v-text-field>
                 <v-text-field
                   v-model.number="recipe.time"
-                  label="Time to Make (in minutes)"
+                  label="Number of days (in days)"
                   type="number"
                 ></v-text-field>
                 <v-switch
@@ -339,7 +339,7 @@ function closeSnackBar() {
           </v-card-text>
           <v-card-actions class="pt-0">
             <v-btn variant="flat" color="primary" @click="updateRecipe()"
-              >Update Recipe</v-btn
+              >Update Tour</v-btn
             >
             <v-spacer></v-spacer>
           </v-card-actions>
@@ -352,7 +352,7 @@ function closeSnackBar() {
           <v-card-title
             ><v-row align="center">
               <v-col cols="10"
-                ><v-card-title class="headline">Ingredients </v-card-title>
+                ><v-card-title class="headline">Attractions </v-card-title>
               </v-col>
               <v-col class="d-flex justify-end" cols="2">
                 <v-btn color="accent" @click="openAddIngredient()">Add</v-btn>
@@ -456,30 +456,22 @@ function closeSnackBar() {
       <v-card class="rounded-lg elevation-5">
         <v-card-title class="headline mb-2">{{
           isAddIngredient
-            ? "Add Ingredient"
+            ? "Add Attractions"
             : isEditIngredient
-            ? "Edit Ingredient"
+            ? "Edit Attractions"
             : ""
         }}</v-card-title>
         <v-card-text>
           <v-row>
-            <v-col cols="3">
-              <v-text-field
-                v-model="newIngredient.quantity"
-                label="Quantity"
-                type="number"
-                required
-              >
-              </v-text-field>
-            </v-col>
+          
 
             <v-col>
               <v-select
-                v-model="selectedIngredient"
-                :items="ingredients"
+                v-model="newIngredient.name"
+                :items="Attractions"
                 item-title="name"
                 item-value="unit"
-                label="Ingredients"
+                label="Attractions"
                 return-object
                 required
               >
@@ -557,7 +549,7 @@ function closeSnackBar() {
             :items="recipeIngredients"
             item-title="ingredient.name"
             item-value="id"
-            label="Ingredients"
+            label="Attractions"
             return-object
             multiple
             chips

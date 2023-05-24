@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: "/",
@@ -12,36 +12,32 @@ const router = createRouter({
       path: "/about",
       name: "about",
       component: () => import("./views/AboutView.vue"),
-
+    },
+    {
+      path: "/subscribe",
+      name: "subscribe",
+      component: () => import("./views/SubscribersView.vue"),
     },
     {
       path: "/tours",
       name: "tours",
       component: () => import("./views/ToursWeoffer.vue"),
-
     },
     {
       path: "/book",
       name: "book",
-      component: () => import("./views/BookNow.vue"),
-
+      component: () => import("./views/subscribe.vue"),
     },
-
     {
       path: "/recipes",
       name: "recipes",
       component: () => import("./views/RecipeList.vue"),
     },
     {
-      path: "/Home",
-      name: "Home",
+      path: "/home",
+      name: "home",
       component: () => import("./views/HomeView.vue"),
     },
-
-
-  
-
-    
     {
       path: "/recipe/:id",
       name: "editRecipe",

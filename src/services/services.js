@@ -1,14 +1,9 @@
 import axios from "axios";
 
-var baseurl = "";
-if (process.env.NODE_ENV === "development") {
-  baseurl = "http://localhost/recipeapi/";
-} else {
-  baseurl = "/recipeapi/";
-}
+const baseURL = process.env.NODE_ENV === "development" ? "http://localhost/travelapi/" : "/travelapi/";
 
 const apiClient = axios.create({
-  baseURL: baseurl,
+  baseURL: baseURL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -30,7 +25,7 @@ const apiClient = axios.create({
   },
   transformResponse: function (data) {
     data = JSON.parse(data);
-    if (!data.success && data.code == "expired-session") {
+    if (!data.success && data.code === "expired-session") {
       localStorage.removeItem("user");
     }
     return data;
