@@ -296,7 +296,11 @@ function closeSnackBar() {
     <v-row align="center">
       <v-col cols="10"
         ><v-card-title class="pl-0 text-h4 font-weight-bold"
+<<<<<<< HEAD
           >Edit Tour
+=======
+          >Edit Recipe
+>>>>>>> origin/deploy_travel
         </v-card-title>
       </v-col>
     </v-row>
@@ -313,12 +317,20 @@ function closeSnackBar() {
                 ></v-text-field>
                 <v-text-field
                   v-model.number="recipe.servings"
+<<<<<<< HEAD
                   label="Enter The price"
+=======
+                  label="Number of Servings"
+>>>>>>> origin/deploy_travel
                   type="number"
                 ></v-text-field>
                 <v-text-field
                   v-model.number="recipe.time"
+<<<<<<< HEAD
                   label="Number of days (in days)"
+=======
+                  label="Time to Make (in minutes)"
+>>>>>>> origin/deploy_travel
                   type="number"
                 ></v-text-field>
                 <v-switch
@@ -339,7 +351,11 @@ function closeSnackBar() {
           </v-card-text>
           <v-card-actions class="pt-0">
             <v-btn variant="flat" color="primary" @click="updateRecipe()"
+<<<<<<< HEAD
               >Update Tour</v-btn
+=======
+              >Update Recipe</v-btn
+>>>>>>> origin/deploy_travel
             >
             <v-spacer></v-spacer>
           </v-card-actions>
@@ -352,7 +368,11 @@ function closeSnackBar() {
           <v-card-title
             ><v-row align="center">
               <v-col cols="10"
+<<<<<<< HEAD
                 ><v-card-title class="headline">Attractions </v-card-title>
+=======
+                ><v-card-title class="headline">Ingredients </v-card-title>
+>>>>>>> origin/deploy_travel
               </v-col>
               <v-col class="d-flex justify-end" cols="2">
                 <v-btn color="accent" @click="openAddIngredient()">Add</v-btn>
@@ -456,13 +476,20 @@ function closeSnackBar() {
       <v-card class="rounded-lg elevation-5">
         <v-card-title class="headline mb-2">{{
           isAddIngredient
+<<<<<<< HEAD
             ? "Add Attractions"
             : isEditIngredient
             ? "Edit Attractions"
+=======
+            ? "Add Ingredient"
+            : isEditIngredient
+            ? "Edit Ingredient"
+>>>>>>> origin/deploy_travel
             : ""
         }}</v-card-title>
         <v-card-text>
           <v-row>
+<<<<<<< HEAD
           
 
             <v-col>
@@ -472,6 +499,25 @@ function closeSnackBar() {
                 item-title="name"
                 item-value="unit"
                 label="Attractions"
+=======
+            <v-col cols="3">
+              <v-text-field
+                v-model="newIngredient.quantity"
+                label="Quantity"
+                type="number"
+                required
+              >
+              </v-text-field>
+            </v-col>
+
+            <v-col>
+              <v-select
+                v-model="selectedIngredient"
+                :items="ingredients"
+                item-title="name"
+                item-value="unit"
+                label="Ingredients"
+>>>>>>> origin/deploy_travel
                 return-object
                 required
               >
@@ -549,7 +595,11 @@ function closeSnackBar() {
             :items="recipeIngredients"
             item-title="ingredient.name"
             item-value="id"
+<<<<<<< HEAD
             label="Attractions"
+=======
+            label="Ingredients"
+>>>>>>> origin/deploy_travel
             return-object
             multiple
             chips

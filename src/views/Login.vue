@@ -111,7 +111,11 @@ function closeSnackBar() {
             color="secondary"
             @click="navigateToRecipes()"
           >
+<<<<<<< HEAD
             View More
+=======
+            View Published Recipes
+>>>>>>> origin/deploy_travel
           </v-btn>
         </v-card-title>
       </v-card>
@@ -174,4 +178,8 @@ function closeSnackBar() {
       </v-snackbar>
     </div>
   </v-container>
+<<<<<<< HEAD
 </template>
+=======
+</template>
+>>>>>>> origin/deploy_travel

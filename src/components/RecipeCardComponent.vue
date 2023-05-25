@@ -60,12 +60,21 @@ function navigateToEdit() {
         <v-col cols="10">
           {{ recipe.name }}
           <v-chip class="ma-2" color="primary" label>
+<<<<<<< HEAD
             <v-icon start icon="mdi-currency-usd"></v-icon>
             {{ recipe.servings }} 
           </v-chip>
           <v-chip class="ma-2" color="accent" label>
             <v-icon start icon="mdi-clock-outline"></v-icon>
             {{ recipe.time }} Number of days
+=======
+            <v-icon start icon="mdi-account-circle-outline"></v-icon>
+            {{ recipe.servings }} Servings
+          </v-chip>
+          <v-chip class="ma-2" color="accent" label>
+            <v-icon start icon="mdi-clock-outline"></v-icon>
+            {{ recipe.time }} minutes
+>>>>>>> origin/deploy_travel
           </v-chip>
         </v-col>
         <v-col class="d-flex justify-end">
@@ -83,7 +92,11 @@ function navigateToEdit() {
     </v-card-text>
     <v-expand-transition>
       <v-card-text class="pt-0" v-show="showDetails">
+<<<<<<< HEAD
         <h3>Information</h3>
+=======
+        <h3>Ingredients</h3>
+>>>>>>> origin/deploy_travel
         <v-list>
           <v-list-item
             v-for="recipeIngredient in recipeIngredients"
@@ -102,6 +115,7 @@ function navigateToEdit() {
             }}/{{ recipeIngredient.ingredient.unit }})
           </v-list-item>
         </v-list>
+<<<<<<< HEAD
         <h3>Attractions</h3>
         <v-table>
           <thead>
@@ -109,6 +123,15 @@ function navigateToEdit() {
               <th class="text-left">NO</th>
               <th class="text-left">Trip Overview</th>
               <th class="text-left">Discription</th>
+=======
+        <h3>Recipe Steps</h3>
+        <v-table>
+          <thead>
+            <tr>
+              <th class="text-left">Step</th>
+              <th class="text-left">Instruction</th>
+              <th class="text-left">Ingredients</th>
+>>>>>>> origin/deploy_travel
             </tr>
           </thead>
           <tbody>
