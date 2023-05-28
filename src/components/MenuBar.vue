@@ -7,11 +7,7 @@ import UserServices from "../services/UserServices";
 const router = useRouter();
 
 const user = ref(null);
-<<<<<<< HEAD
 const title = ref("Travel Iternary");
-=======
-const title = ref("Recipes");
->>>>>>> origin/deploy_travel
 const logoURL = ref("");
 
 onMounted(() => {
@@ -49,7 +45,6 @@ function logout() {
         {{ title }}
       </v-toolbar-title>
       <v-spacer></v-spacer>
-<<<<<<< HEAD
       <v-btn class="mx-2" :to="{ name: 'home' }">Home</v-btn>
       <v-btn class="mx-2" :to="{ name: 'recipes' }">Tours</v-btn>
       <v-btn v-if="user !== null" class="mx-2" :to="{ name: 'subscribe' }">Subscribers</v-btn>
@@ -63,16 +58,6 @@ function logout() {
 
      
             <v-menu v-if="user !== null" min-width="200px" rounded>
-=======
-      <v-btn class="mx-2" :to="{ name: 'recipes' }"> Recipes </v-btn>
-      <v-btn v-if="user === null" class="mx-2" :to="{ name: 'login' }">
-        Login
-      </v-btn>
-      <v-btn v-if="user !== null" class="mx-2" :to="{ name: 'ingredients' }">
-        Ingredients
-      </v-btn>
-      <v-menu v-if="user !== null" min-width="200px" rounded>
->>>>>>> origin/deploy_travel
         <template v-slot:activator="{ props }">
           <v-btn icon v-bind="props">
             <v-avatar class="mx-auto text-center" color="accent" size="large">
@@ -102,8 +87,4 @@ function logout() {
       </v-menu>
     </v-app-bar>
   </div>
-<<<<<<< HEAD
 </template>
-=======
-</template>
->>>>>>> origin/deploy_travel
