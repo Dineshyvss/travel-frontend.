@@ -296,11 +296,7 @@ function closeSnackBar() {
     <v-row align="center">
       <v-col cols="10"
         ><v-card-title class="pl-0 text-h4 font-weight-bold"
-<<<<<<< HEAD
           >Edit Tour
-=======
-          >Edit Recipe
->>>>>>> origin/deploy_travel
         </v-card-title>
       </v-col>
     </v-row>

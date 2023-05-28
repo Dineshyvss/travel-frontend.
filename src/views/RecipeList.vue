@@ -89,11 +89,7 @@ function closeSnackBar() {
       <v-row align="center" class="mb-4">
         <v-col cols="10"
           ><v-card-title class="pl-0 text-h4 font-weight-bold"
-<<<<<<< HEAD
             >Tours
-=======
-            >Recipes
->>>>>>> origin/deploy_travel
           </v-card-title>
         </v-col>
         <v-col class="d-flex justify-end" cols="2">
@@ -112,11 +108,7 @@ function closeSnackBar() {
 
       <v-dialog persistent v-model="isAdd" width="800">
         <v-card class="rounded-lg elevation-5">
-<<<<<<< HEAD
           <v-card-title class="headline mb-2">Add Tour </v-card-title>
-=======
-          <v-card-title class="headline mb-2">Add Recipe </v-card-title>
->>>>>>> origin/deploy_travel
           <v-card-text>
             <v-text-field
               v-model="newRecipe.name"
@@ -126,20 +118,12 @@ function closeSnackBar() {
 
             <v-text-field
               v-model.number="newRecipe.servings"
-<<<<<<< HEAD
               label="Price"
-=======
-              label="Number of Servings"
->>>>>>> origin/deploy_travel
               type="number"
             ></v-text-field>
             <v-text-field
               v-model.number="newRecipe.time"
-<<<<<<< HEAD
               label="Days"
-=======
-              label="Time to Make (in minutes)"
->>>>>>> origin/deploy_travel
               type="number"
             ></v-text-field>
 
@@ -160,11 +144,7 @@ function closeSnackBar() {
               >Close</v-btn
             >
             <v-btn variant="flat" color="primary" @click="addRecipe()"
-<<<<<<< HEAD
               >Add Tour</v-btn
-=======
-              >Add Recipe</v-btn
->>>>>>> origin/deploy_travel
             >
           </v-card-actions>
         </v-card>

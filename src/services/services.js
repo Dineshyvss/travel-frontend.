@@ -25,11 +25,7 @@ const apiClient = axios.create({
   },
   transformResponse: function (data) {
     data = JSON.parse(data);
-<<<<<<< HEAD
     if (!data.success && data.code === "expired-session") {
-=======
-    if (!data.success && data.code == "expired-session") {
->>>>>>> origin/deploy_travel
       localStorage.removeItem("user");
     }
     return data;
