@@ -9,4 +9,3 @@ loadFonts();
 
 axios.defaults.baseURL = 'http://localhost:3201'; 
 createApp(App).use(router).use(vuetify).mount('#app');
-
