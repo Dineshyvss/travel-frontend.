@@ -2,9 +2,9 @@
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import IngredientServices from "../services/IngredientServices.js";
-import RecipeIngredientServices from "../services/RecipeIngredientServices";
-import RecipeStepServices from "../services/RecipeStepServices";
-import RecipeServices from "../services/RecipeServices";
+import RecipeIngredientServices from "../services/RecipeIngredientServices.js";
+import RecipeStepServices from "../services/RecipeStepServices.js";
+import RecipeServices from "../services/RecipeServices.js";
 
 const route = useRoute();
 
