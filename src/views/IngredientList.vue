@@ -220,8 +220,4 @@ function closeSnackBar() {
       </v-snackbar>
     </div>
   </v-container>
-<<<<<<< HEAD
 </template>
-=======
-</template>
->>>>>>> origin/deploy_travel
