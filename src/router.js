@@ -5,6 +5,10 @@ const router = createRouter({
   routes: [
     {
       path: "/",
+      redirect: "/login",
+    },
+    {
+      path: "/login",
       name: "login",
       component: () => import("./views/Login.vue"),
     },
@@ -17,6 +21,9 @@ const router = createRouter({
       path: "/subscribe",
       name: "subscribe",
       component: () => import("./views/SubscribersView.vue"),
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/tours",
@@ -26,7 +33,7 @@ const router = createRouter({
     {
       path: "/book",
       name: "book",
-      component: () => import("./views/subscribe.vue"),
+      component: () => import("./views/Subscribe.vue"),
     },
     {
       path: "/recipes",
