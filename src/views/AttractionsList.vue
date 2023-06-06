@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from "vue";
 import { ref } from "vue";
-import IngredientServices from "../services/IngredientServices.js";
+import IngredientServices from "../services/ToursServices.js";
 
 const units = [
   "cup",

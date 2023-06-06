@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted } from "vue";
 import { ref } from "vue";
-import RecipeCard from "../components/RecipeCardComponent.vue";
-import RecipeServices from "../services/RecipeServices.js";
+import RecipeCard from "../components/TourCardComponent.vue";
+import RecipeServices from "../services/TourServices.js";
 
 const recipes = ref([]);
 const isAdd = ref(false);

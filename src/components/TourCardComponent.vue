@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import RecipeIngredientServices from "../services/RecipeIngredientServices.js";
-import RecipeStepServices from "../services/RecipeStepServices";
+import RecipeIngredientServices from "../services/tourattractionsServices";
+import RecipeStepServices from "../services/TourStepServices";
 
 const router = useRouter();
 

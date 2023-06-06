@@ -1,10 +1,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import IngredientServices from "../services/IngredientServices.js";
-import RecipeIngredientServices from "../services/RecipeIngredientServices.js";
-import RecipeStepServices from "../services/RecipeStepServices.js";
-import RecipeServices from "../services/RecipeServices.js";
+import IngredientServices from "../services/AttractionsServices.js";
+import RecipeIngredientServices from "../services/AttractionsServices.js";
+import RecipeStepServices from "../services/tourattractionsServices.js";
+import RecipeServices from "../services/TourServices.js";
 
 const route = useRoute();
 
@@ -185,7 +185,7 @@ async function addStep() {
       newStep.value.id = data.data.id;
       snackbar.value.value = true;
       snackbar.value.color = "green";
-      snackbar.value.text = `Step added successfully!`;
+      snackbar.value.text = `Tour added successfully!`;
     })
     .catch((error) => {
       console.log(error);
@@ -224,7 +224,7 @@ async function deleteStep(step) {
     .then(() => {
       snackbar.value.value = true;
       snackbar.value.color = "green";
-      snackbar.value.text = `Step deleted successfully!`;
+      snackbar.value.text = `Attraction deleted successfully!`;
     })
     .catch((error) => {
       console.log(error);
@@ -350,14 +350,7 @@ function closeSnackBar() {
       <v-col>
         <v-card class="rounded-lg elevation-5">
           <v-card-title
-            ><v-row align="center">
-              <v-col cols="10"
-                ><v-card-title class="headline">Attractions </v-card-title>
-              </v-col>
-              <v-col class="d-flex justify-end" cols="2">
-                <v-btn color="accent" @click="openAddIngredient()">Add</v-btn>
-              </v-col>
-            </v-row>
+            >
           </v-card-title>
           <v-card-text>
             <v-list>
@@ -404,7 +397,7 @@ function closeSnackBar() {
           <v-card-title
             ><v-row align="center">
               <v-col cols="10"
-                ><v-card-title class="headline">Steps </v-card-title>
+                ><v-card-title class="headline">Tour Info </v-card-title>
               </v-col>
               <v-col class="d-flex justify-end" cols="2">
                 <v-btn color="accent" @click="openAddStep()">Add</v-btn>
@@ -528,13 +521,13 @@ function closeSnackBar() {
     <v-dialog persistent :model-value="isAddStep || isEditStep" width="800">
       <v-card class="rounded-lg elevation-5">
         <v-card-title class="headline mb-2">
-          {{ isAddStep ? "Add Step" : isEditStep ? "Edit Step" : "" }}
+          {{ isAddStep ? "Add Tour info" : isEditStep ? "Edit Step" : "" }}
         </v-card-title>
         <v-card-text>
           <v-text-field
             v-model="newStep.stepNumber"
-            label="Number"
-            type="number"
+            label="Number of day's"
+            type="number of day's"
             required
           ></v-text-field>
 
@@ -544,17 +537,7 @@ function closeSnackBar() {
             required
           ></v-textarea>
 
-          <v-select
-            v-model="newStep.recipeIngredient"
-            :items="recipeIngredients"
-            item-title="ingredient.name"
-            item-value="id"
-            label="Attractions"
-            return-object
-            multiple
-            chips
-            required
-          ></v-select>
+          
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -571,7 +554,7 @@ function closeSnackBar() {
             color="primary"
             @click="isAddStep ? addStep() : isEditStep ? updateStep() : false"
             >{{
-              isAddStep ? "Add Step" : isEditStep ? "Update Step" : ""
+              isAddStep ? "Add tour" : isEditStep ? "Update tour" : ""
             }}</v-btn
           >
         </v-card-actions>
