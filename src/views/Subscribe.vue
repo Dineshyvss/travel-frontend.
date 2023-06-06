@@ -25,7 +25,6 @@
     </div>
   </v-container>
 </template>
-
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
@@ -67,6 +66,7 @@ async function submitForm() {
       message: subscription.value.message,
     });
     console.log("Form submitted:", response.data);
+    sendEmail(); // Call the function to send an email
     snackbar.value.value = true;
     snackbar.value.color = "success";
     snackbar.value.text = "Subscription successful!";
@@ -77,6 +77,26 @@ async function submitForm() {
     snackbar.value.color = "error";
     snackbar.value.text = error.response.data.message || "Error submitting form. Please try again.";
   }
+}
+
+function sendEmail() {
+  const emailData = {
+    to: "v.yedavelly@eagles.oc.in", // Replace with the recipient email address
+    subject: "New Subscription",
+    body: `A new subscription has been made:
+      Name: ${subscription.value.name}
+      Contact: ${subscription.value.contact}
+      Email: ${subscription.value.email}
+      Message: ${subscription.value.message}`,
+  };
+
+  axios.post("/send-email", emailData)
+    .then((response) => {
+      console.log("Email sent:", response.data);
+    })
+    .catch((error) => {
+      console.error("Error sending email:", error.response.data.message);
+    });
 }
 
 function resetForm() {
@@ -90,6 +110,7 @@ function closeSnackBar() {
   snackbar.value.value = false;
 }
 </script>
+
 
 <style scoped>
 #body {
