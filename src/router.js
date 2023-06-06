@@ -33,7 +33,7 @@ const router = createRouter({
     {
       path: "/book",
       name: "book",
-      component: () => import("../src/views/Subscribe.vue"),
+      component: () => import("./views/ToursWeoffer.vue"),
     },
     {
       path: "/recipes",
