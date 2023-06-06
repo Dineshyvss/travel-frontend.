@@ -7,7 +7,7 @@ import UserServices from "../services/UserServices";
 const router = useRouter();
 
 const user = ref(null);
-const title = ref("Recipes");
+const title = ref("Travel Iternary");
 const logoURL = ref("");
 
 onMounted(() => {
@@ -45,14 +45,19 @@ function logout() {
         {{ title }}
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="mx-2" :to="{ name: 'recipes' }"> Recipes </v-btn>
-      <v-btn v-if="user === null" class="mx-2" :to="{ name: 'login' }">
-        Login
+      <v-btn class="mx-2" :to="{ name: 'home' }">Home</v-btn>
+      <v-btn class="mx-2" :to="{ name: 'recipes' }">Tours</v-btn>
+      <v-btn v-if="user !== null" class="mx-2" :to="{ name: 'subscribe' }">Subscribers</v-btn>
+      
+      <v-btn v-if="user === null" class="mx-2" :to="{ name: 'about' }">
+        About
       </v-btn>
-      <v-btn v-if="user !== null" class="mx-2" :to="{ name: 'ingredients' }">
-        Ingredients
-      </v-btn>
-      <v-menu v-if="user !== null" min-width="200px" rounded>
+      <v-btn v-if="user === null" class="mx-2" :to="{ name: 'book' }">Subscribe</v-btn>
+      <v-btn class="mx-2" :to="{ name: 'login' }">Login</v-btn>
+
+
+     
+            <v-menu v-if="user !== null" min-width="200px" rounded>
         <template v-slot:activator="{ props }">
           <v-btn icon v-bind="props">
             <v-avatar class="mx-auto text-center" color="accent" size="large">
