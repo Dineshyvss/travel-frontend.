@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  aws-deploy:
+  aws-deploy: 
     runs-on: ubuntu-latest
 
     steps:
