@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [closed]
     branches:
-      - dev
+      - main
 
 jobs:
   aws-deploy:
@@ -13,10 +13,11 @@ jobs:
     #For google auth
 
     steps:
+    
       - uses: actions/checkout@v2
         # may need to change to version 3
         with:
-          ref: dev
+          ref: main
       - uses: actions/setup-node@v3
         #May need to change to version 18
         with:
@@ -26,6 +27,7 @@ jobs:
       - run: npm run build
 
       - name: Deploy to Server
+      
         uses: easingthemes/ssh-deploy@v2.1.1
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
