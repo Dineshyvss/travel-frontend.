@@ -38,7 +38,7 @@ const router = createRouter({
     {
       path: "/recipes",
       name: "recipes",
-      component: () => import("./views/RecipeList.vue"),
+      component: () => import("./views/TourList.vue"),
     },
     {
       path: "/home",
@@ -49,12 +49,12 @@ const router = createRouter({
       path: "/recipe/:id",
       name: "editRecipe",
       props: true,
-      component: () => import("./views/EditRecipe.vue"),
+      component: () => import("../src/views/EditTour.vue"),
     },
     {
       path: "/ingredients",
       name: "ingredients",
-      component: () => import("./views/IngredientList.vue"),
+      component: () => import("./views/AttractionsList.vue"),
     },
   ],
 });
