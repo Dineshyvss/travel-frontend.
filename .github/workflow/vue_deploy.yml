@@ -33,6 +33,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltgoDzvO --delete"
           SOURCE: "dist/"
-          REMOTE_HOST: "http://ec2-3-94-57-116.compute-1.amazonaws.com/"
+          REMOTE_HOST: "http://ec2-3-93-153-32.compute-1.amazonaws.com/"
           REMOTE_USER: ubuntu
           TARGET: "/var/www/html/travel-frontend"
