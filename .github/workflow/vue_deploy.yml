@@ -35,4 +35,4 @@ jobs:
           SOURCE: "dist/"
           REMOTE_HOST: "http://ec2-3-93-153-32.compute-1.amazonaws.com/"
           REMOTE_USER: ubuntu
-          TARGET: "/var/www/html/travel-frontend"
+          TARGET: "C:\xampp\htdocs\Travel_Frontend\travel-frontend.-main\travel-frontend.-main"
