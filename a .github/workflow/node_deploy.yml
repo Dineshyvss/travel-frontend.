@@ -1,6 +1,6 @@
-name: AWS DEPLOY
-# turn off deploy to AWS
+name: AWS DEPLOY TO STAGING
 
+#turn off deploy to AWS
 on:
   pull_request:
     types: [closed]
@@ -10,49 +10,27 @@ on:
 jobs:
   aws-deploy:
     runs-on: ubuntu-latest
-    env:
-      DB_HOST: ${{ secrets.AWS_DB_HOST }}
-      DB_PW: ${{ secrets.AWS_DB_PW}}
-      DB_USER: ${{ secrets.AWS_DB_USER }}
-      DB_NAME: ${{ secrets.AWS_DB_NAME }}
+    #For google auth
 
     steps:
       - uses: actions/checkout@v2
+        # may need to change to version 3
         with:
           ref: dev
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
+        #May need to change to version 18
+        with:
+          node-version: 16
+
       - run: npm install
-
-      - run: |
-          touch .env
-          echo DB_HOST = "$DB_HOST" >> .env
-          echo DB_PW = "$DB_PW" >> .env
-          echo DB_USER = "$DB_USER" >> .env
-          echo DB_NAME = "$DB_NAME" >> .env
-
-      - run: npm run bundle
+      - run: npm run build
 
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@v2.1.1
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltgoDzvO --delete"
-          SOURCE: "deploy/"
-          REMOTE_HOST: "recipe.eaglesoftwareteam.com"
+          SOURCE: "dist/"
+          REMOTE_HOST: "ec2-3-95-156-213.compute-1.amazonaws.com"
           REMOTE_USER: ubuntu
-          TARGET: "nodeapps/Travel-backend"
-      - name: Execute SSH commmands on remote server
-        uses: JimCronqvist/action-ssh@master
-        env:
-          NAME: "Root"
-        with:
-          hosts: "ec2-54-234-254-60.compute-1.amazonaws.com"
-          privateKey: ${{ secrets.SERVER_SSH_KEY }}
-          debug: false
-          command: |
-            cd nodeapps/recipe-backend
-            npm install
-            sudo systemctl stop recipe-backend
-            sudo cp recipe-backend.service /lib/systemd/system/recipe-backend.service
-            sudo systemctl daemon-reload
-            sudo systemctl start recipe-backend
+          TARGET: "/var/www/html/travel-frontend"
