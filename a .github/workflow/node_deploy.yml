@@ -1,6 +1,6 @@
 name: AWS DEPLOY TO STAGING
 
-#turn off deploy to AWS
+# Turn off deploy to AWS
 on:
   pull_request:
     types: [closed]
@@ -10,15 +10,12 @@ on:
 jobs:
   aws-deploy:
     runs-on: ubuntu-latest
-    #For google auth
 
     steps:
       - uses: actions/checkout@v2
-        # may need to change to version 3
         with:
           ref: dev
       - uses: actions/setup-node@v3
-        #May need to change to version 18
         with:
           node-version: 16
 
@@ -31,6 +28,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltgoDzvO --delete"
           SOURCE: "dist/"
-          REMOTE_HOST: "ec2-3-95-156-213.compute-1.amazonaws.com"
+          REMOTE_HOST: "3.95.156.213"  # Update with your actual server's IP address
           REMOTE_USER: ubuntu
           TARGET: "/var/www/html/travel-frontend"
