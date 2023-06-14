@@ -7,5 +7,5 @@ import axios from 'axios';
 
 loadFonts();
 
-axios.defaults.baseURL = 'http://localhost:3201'; 
+axios.defaults.baseURL = 'http:http://ec2-3-95-156-213.compute-1.amazonaws.com:8081/:3201'; 
 createApp(App).use(router).use(vuetify).mount('#app');
