@@ -15,8 +15,7 @@
             <th class="text-left">Name</th>
             <th class="text-left">Email</th>
             <th class="text-left">Contact</th>
-            <th class="text-left">Message</th>
-            <th class="text-left">Actions</th>
+           
           </tr>
         </thead>
         <tbody>
@@ -39,15 +38,7 @@
                 pattern="[0-9]{10}"
               ></v-text-field>
             </td>
-            <td>{{ subscriber.message }}</td>
-            <td>
-              <template v-if="!subscriber.editing">
-                <v-btn @click="editSubscriber(subscriber)">Edit</v-btn>
-              </template>
-              <template v-else>
-                <v-btn @click="saveSubscriber(subscriber)">Save</v-btn>
-              </template>
-            </td>
+           
           </tr>
         </tbody>
       </v-table>
@@ -68,6 +59,7 @@
     </div>
   </v-container>
 </template>
+
 
 <script>
 import { onMounted, ref } from "vue";

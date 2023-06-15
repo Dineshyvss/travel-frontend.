@@ -83,7 +83,7 @@ function navigateToEdit() {
     </v-card-text>
     <v-expand-transition>
       <v-card-text class="pt-0" v-show="showDetails">
-        <h3>Information</h3>
+ 
         <v-list>
           <v-list-item
             v-for="recipeIngredient in recipeIngredients"
@@ -102,13 +102,13 @@ function navigateToEdit() {
             }}/{{ recipeIngredient.ingredient.unit }})
           </v-list-item>
         </v-list>
-        <h3>Attractions</h3>
+        <h3>Tour Info</h3>
         <v-table>
           <thead>
             <tr>
               <th class="text-left">NO</th>
               <th class="text-left">Trip Overview</th>
-              <th class="text-left">Discription</th>
+            
             </tr>
           </thead>
           <tbody>

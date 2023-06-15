@@ -25,92 +25,91 @@
     </div>
   </v-container>
 </template>
-<script setup>
-import { ref } from "vue";
+
+<script>
 import axios from "axios";
 
-const snackbar = ref({
-  value: false,
-  color: "",
-  text: "",
-});
+export default {
+  data() {
+    return {
+      snackbar: {
+        value: false,
+        color: "",
+        text: "",
+      },
+      subscription: {
+        name: "",
+        contact: "",
+        email: "",
+        message: "",
+      },
+      nameRules: [
+        (v) => !!v || "Name is required",
+        (v) => v && v.length <= 50 || "Name must be less than or equal to 50 characters",
+      ],
+      contactRules: [
+        (v) => !!v || "Contact is required",
+        (v) => /^[0-9]{10}$/.test(v) || "Contact must be a 10-digit number",
+      ],
+      emailRules: [
+        (v) => !!v || "Email is required",
+        (v) => /.+@.+\..+/.test(v) || "Email must be valid",
+      ],
+    };
+  },
+  methods: {
+    async submitForm() {
+      try {
+        const response = await axios.post("http://localhost:3201/travelapi/subscribe", {
+          name: this.subscription.name,
+          contact: this.subscription.contact,
+          email: this.subscription.email,
+          message: this.subscription.message,
+        });
+        console.log("Form submitted:", response.data);
+        this.sendEmail(); // Call the function to send an email
+        this.snackbar.value = true;
+        this.snackbar.color = "success";
+        this.snackbar.text = "Subscription successful!";
+        this.resetForm();
+      } catch (error) {
+        console.error("Error submitting form:", error.response.data.message);
+        this.snackbar.value = true;
+        this.snackbar.color = "error";
+        this.snackbar.text = error.response.data.message || "Error submitting form. Please try again.";
+      }
+    },
+    sendEmail() {
+      const emailData = {
+        to: "v.yedavelly@eagles.oc.in", // Replace with the recipient email address
+        subject: "New Subscription",
+        body: `A new subscription has been made:
+          Name: ${this.subscription.name}
+          Contact: ${this.subscription.contact}
+          Email: ${this.subscription.email}
+          Message: ${this.subscription.message}`,
+      };
 
-const subscription = ref({
-  name: "",
-  contact: "",
-  email: "",
-  message: "",
-});
-
-const nameRules = [
-  (v) => !!v || "Name is required",
-  (v) => v && v.length <= 50 || "Name must be less than or equal to 50 characters",
-];
-
-const contactRules = [
-  (v) => !!v || "Contact is required",
-  (v) => /^[0-9]{10}$/.test(v) || "Contact must be a 10-digit number",
-];
-
-const emailRules = [
-  (v) => !!v || "Email is required",
-  (v) => /.+@.+\..+/.test(v) || "Email must be valid",
-];
-
-async function submitForm() {
-  try {
-    const response = await axios.post("/travelapi/subscribe", {
-      name: subscription.value.name,
-      contact: subscription.value.contact,
-      email: subscription.value.email,
-      message: subscription.value.message,
-    });
-    console.log("Form submitted:", response.data);
-    sendEmail(); // Call the function to send an email
-    snackbar.value.value = true;
-    snackbar.value.color = "success";
-    snackbar.value.text = "Subscription successful!";
-    resetForm();
-  } catch (error) {
-    console.error("Error submitting form:", error.response.data.message);
-    snackbar.value.value = true;
-    snackbar.value.color = "error";
-    snackbar.value.text = error.response.data.message || "Error submitting form. Please try again.";
-  }
-}
-
-function sendEmail() {
-  const emailData = {
-    to: "v.yedavelly@eagles.oc.in", // Replace with the recipient email address
-    subject: "New Subscription",
-    body: `A new subscription has been made:
-      Name: ${subscription.value.name}
-      Contact: ${subscription.value.contact}
-      Email: ${subscription.value.email}
-      Message: ${subscription.value.message}`,
-  };
-
-  axios.post("/send-email", emailData)
-    .then((response) => {
-      console.log("Email sent:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error sending email:", error.response.data.message);
-    });
-}
-
-function resetForm() {
-  subscription.value.name = "";
-  subscription.value.contact = "";
-  subscription.value.email = "";
-  subscription.value.message = "";
-}
-
-function closeSnackBar() {
-  snackbar.value.value = false;
-}
+      axios.post("http://localhost:3201/send-email", emailData)
+        .then((response) => {
+          console.log("Email sent:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error sending email:", error.response.data.message);
+        });
+    },
+    resetForm() {
+      this.subscription.name = "";
+      this.subscription.contact = "";
+      this.subscription.email = "";
+      this.subscription.message = "";
+    },
+    closeSnackBar() {
+      this.snackbar.value = false;
+    },
+  },
+};
 </script>
-
 
 <style scoped>
 #body {
